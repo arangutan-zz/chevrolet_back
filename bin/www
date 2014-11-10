@@ -1,0 +1,219 @@
+#!/usr/bin/env node
+var debug = require('debug')('server_catalogo');
+var app = require('../app');
+var func = require('./funciones');
+var Cliente = require('../models/cliente');
+
+
+// func.calcular_vendedormasventas('30/10/2014');
+func.calcular_consecionariomasventas('30/10/2014');
+
+var io = require('socket.io').listen(app.listen(3001, function(){
+  console.log("Aplicacion de catalogo corriendo en el puerto " + 3001);
+}));
+
+io.sockets.on('connection', function (socket) {
+	console.log("nuevo dispositivo conectado");
+
+	socket.on('create_user', function (data) {
+		var cliente = new Cliente({
+    		name: data.nombre,
+			dni:  data.dni,
+			celphone:  data.telefono,
+			correo :  data.correo
+    	});
+
+
+		cliente.consulta.push(data.carro);
+
+    	cliente.save(function (err, obj) {
+			if (err) return console.error(err);
+		  	//console.log(obj);
+
+		  	var obj = {
+		  		estado : 1,
+		  		user: obj
+		  	}
+
+		  	socket.emit('user_data',obj);
+		});
+	});
+
+
+	socket.on('user_pass',function (data){
+
+		Cliente.findOne({ dni: data.user_id },function (err, cliente) {
+			if (err) return handleError(err);
+
+			var obj = {};
+
+			if (cliente) {
+
+				cliente.estado = 'noatendido';
+
+				cliente.save(function(err,obj){
+					if (err) {};
+
+					obj = {
+				  		estado : 4,
+				  		msg: 'No hay Vendedores disponibles pronto se pondran en contacto con usted'
+				  	}
+
+
+				  	socket.emit('user_data',obj);
+
+				});
+
+
+			}
+
+
+		});
+	});
+
+
+
+	/*When the customer is new the system*/
+    socket.on('call_seller', function (data) {
+    	func.siguienteTurno(io, socket, data);
+    });
+
+
+    socket.on('call_seller_twice',function (data){
+    	func.siguienteTurnoSinTv(io, socket, data);
+    });
+
+
+    /*When the customer is old the system, but want to see the same car o a diferente car*/
+
+     socket.on('find_user', function (data) {
+
+     	Cliente.findOne({ dni: data.dni },function (err, cliente) {
+			if (err) return handleError(err);
+
+			var obj = {};
+
+			if (cliente) {
+
+				cliente.consulta.push(data.carro);
+				cliente.save(function(err, client){
+
+					obj = {
+				  		estado : 1,
+				  		user: cliente
+				  	}
+
+				  	socket.emit('user_data',obj);
+				});
+
+			}else{
+
+				obj = {
+			  		estado : 2,
+			  		msg: 'Este usuario no existe',
+            cedula: data.dni
+			  	}
+
+			  	socket.emit('user_data',obj);
+			}
+
+
+		});
+
+    });
+
+
+    socket.on('seller_acepted', function (data) {
+
+    	//console.log("encontrado");
+
+      console.log('--------Acepto un vendedor-----');
+      console.log(data);
+
+    	/*
+    		1. Registrar user atendido
+    		2. Agregar carro
+    	*/
+
+    	func.cambiarEstadoAtendido(data);
+		  io.to(data.tablet_id).emit('founded', 'ya va en camino');
+
+    });
+
+
+    /*Tombola*/
+
+
+    socket.on('aprobar_compra',function (data){
+    	//console.log(data);
+    	func.cambiarEstadoCompra(data,socket);
+    });
+
+
+
+     socket.on('aprobar_compra_new',function (data){
+    	//console.log(data);
+    	func.cambiarEstadoCompraNew(data,socket);
+    });
+
+
+    /*Vendedor*/
+
+
+    socket.on('user_concesionario',function (data){
+    	console.log(data);
+    	func.buscarConsecionario(data,socket);
+    });
+
+
+    socket.on('num_vendedores',function (data){
+    	func.guargarVendedores(data);
+
+    });
+
+
+    socket.on('buscar_vendedor',function (data){
+
+    	func.buscarVendedor(data,socket);
+
+    	//console.log(data);
+    });
+
+    socket.on('activar_vendedor',function (data){
+    	func.activarVendedor(data,socket);
+    });
+
+
+    socket.on('desactivar_vendedor',function (data){
+      func.elmininarVendedorCola(data.concesionario,data.vendedor);
+    });
+
+
+    socket.on('obtener_disponibles',function (data){
+    	func.obtenerDisponibles(data,socket);
+    });
+
+    socket.on('desocupar_vendedor', function(data){
+    	func.desocuparVendedor(data);
+    });
+
+    socket.on('vendedor_noatendio',function(data){
+      console.log('no atendio');
+      func.vendedorUltimoCola(data);
+    })
+
+
+});
+
+
+
+
+
+module.exports = io;
+
+
+// app.set('port', process.env.PORT || 3003);
+
+// var server = app.listen(app.get('port'), function() {
+//   debug('Express server listening on port ' + server.address().port);
+// });

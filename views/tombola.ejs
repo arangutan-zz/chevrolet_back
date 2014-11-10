@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="/javascripts/foundation.min.js"></script>
+
+    <script type="text/javascript" src="/javascripts/app_tombola.js"></script>
+    <link rel='stylesheet' href='/stylesheets/foundation.min.css' />
+
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/normalize.css' />
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class="body_tombola">
+
+    <header>
+        <div class="row">
+            <div class="large-2 column">
+                <img src="/images/logo_chevrolet.png" class="espacio_titulo">
+            </div>
+            <div class="large-9 large-offset-1 column ">
+                <h1 class="title_app espacio_titulo">REGISTRO DE COMPRA</h1>
+            </div>
+        </div>
+    </header>
+<!--
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+-->
+    <div class="row espacio">
+        <div class="large-6 column text-center boton_tipo_user_tombola btn_activo_user_tombola user_old">
+            <h3>
+                YA ES USUARIO
+            </h3>
+        </div>
+        <div class="large-6 column text-center boton_tipo_user_tombola user_new">
+            <h3 style="opacity:1;">
+                USUARIO NUEVO
+            </h3>
+        </div>
+    </div>
+    <div class="row espacio campos_user_old">
+        <div class="large-6 column large-centered">
+            <label class="naranja">
+                Cedula 
+            </label>
+            <input id="cedula_old" class="input" type="text" placeholder="Cedula Usuario">
+        </div>
+    </div>
+
+    <div class="campos_user_new">
+        <div class="row espacio ">
+            <div class="large-6 column large-centered">
+                <label class="naranja">
+                    Nombre 
+                </label>
+                <input id="nombre_new" class="input" type="text" placeholder="Cedula Usuario">
+            </div>
+        </div>
+        <div class="row espacio ">
+            <div class="large-6 column large-centered">
+                <label class="naranja">
+                    Correo 
+                </label>
+                <input id="correo_new" class="input" type="text" placeholder="Cedula Usuario">
+            </div>
+        </div>
+        <div class="row espacio ">
+            <div class="large-6 column large-centered">
+                <label class="naranja">
+                    Cedula 
+                </label>
+                <input id="cedula_new" class="input" type="text" placeholder="Cedula Usuario">
+            </div>
+        </div>
+        <div class="row espacio ">
+            <div class="large-6 column large-centered">
+                <label class="naranja">
+                    Telefono
+                </label>
+                <input id="telefono_new" class="input" type="text" placeholder="Cedula Usuario">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row espacio">
+        <div class="large-6 column large-centered">
+            <label class="naranja">
+                Cedula Vendedor
+            </label>
+            <input id="cedula_vendedor" class="input" type="text" placeholder="Cedula Vendedor">
+        </div>
+    </div>
+    <div class="row espacio">
+        <!--<img src="/images/fondo-tombola.jpg" id="img-chambon"/>-->
+
+        <div class="large-6 column large-centered">
+            <label class="naranja">
+                Seleccionar el carro
+            </label>
+            <select id="carro_compro" class="input select_naranja">
+                <option value=""></option>
+                <option value="Camaro">Camaro</option>
+                <option value="Spark">Spark</option>
+                <option value="Camioneta">Camioneta</option>
+            </select>   
+        </div>
+
+
+        
+    </div> 
+<!--
+    <br>
+    <br>
+    <br>
+    <br>
+-->
+    <div class="row espacio">
+        <div class="large-12 column text-center">
+            <img id="send" src="/images/btn_enviar_1.png">
+        </div>
+    </div>
+<!--
+    <br>
+    <br>
+    <br>
+    <br>
+-->
+    <div class="row espacio">
+        <div class="large-12 column text-center">
+            <img src="/images/carro-tombola1.png">
+        </div>
+
+    </div>
+
+  </body>
+</html>

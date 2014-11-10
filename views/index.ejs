@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/timers.js"></script>
+    <script type="text/javascript" src="/javascripts/app_catalogo.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    
+    <input type="text" id="carro" placeholder="carro">
+    <h1><%= title %></h1>
+    <h2>Nuevo Usuario</h2>
+    <input id="nombre" type="text" placeholder="Nombre">
+    <input id="cedula" type="text" placeholder="Cedula">
+    <input id="correo" type="text" placeholder="Correo">
+    <input id="telefono" type="text" placeholder="Telefono">
+    <input id="send" type='button', value='llamar vendedor' />
+
+    <h2>Usuario Viejo</h2>
+    <input id="cedula_o" type="text" placeholder="Cedula">
+    <input id="send_o" type='button', value='llamar vendedor' />
+
+  </body>
+</html>

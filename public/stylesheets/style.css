@@ -1,0 +1,249 @@
+@font-face {
+    font-family: "chevroletFont";
+    src: url("../font/LouisRegular.ttf");
+    src: url("../font/LouisRegular.ttf") format("truetype");
+}
+
+body {
+	font: 14px "chevroletFont", Arial, sans-serif;
+	background: #eceef0; /* Old browsers */
+	background: -moz-linear-gradient(top,  #eceef0 0%, #bbbbc0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eceef0), color-stop(100%,#bbbbc0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eceef0 0%,#bbbbc0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eceef0 0%,#bbbbc0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eceef0 0%,#bbbbc0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eceef0 0%,#bbbbc0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eceef0', endColorstr='#bbbbc0',GradientType=0 ); /* IE6-9 */
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+.body_tombola{
+	height: 100%;
+	/*background: #383839;*/
+
+	background: #2c2c2e; /* Old browsers */
+	background: -moz-linear-gradient(top,  #2c2c2e 0%, #97999d 73%, #28343b 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2c2c2e), color-stop(73%,#97999d), color-stop(99%,#28343b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c2c2e', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
+
+}
+
+.text-center{
+	text-align: center;
+}
+
+.text-right{
+	text-align: right;
+}
+
+.espacio_titulo{
+	margin: 20px 0 0 0 ;
+}
+
+.title_app{
+	font-size: 50px;
+	font-style: italic;
+}
+
+header{
+	background: white;
+	height: 100px;
+}
+
+.naranja{
+	color: #E0B334;
+}
+
+
+.select_naranja{
+  background: url(../images/dropdown.png) no-repeat right white;
+}
+
+.espacio{
+	margin-top: 3%;
+}
+
+
+.input{
+	-webkit-appearance: none;  /*Removes default chrome and safari style*/
+	-moz-appearance: none; /* Removes Default Firefox style*/
+  	appearance:        none;
+	-webkit-border-radius: 5px !important;
+	-moz-border-radius: 5px !important;
+	border-radius: 5px !important;
+	padding: 10px;
+	width: 100%;
+	border: 0;
+	margin: 5px 0 0 0;
+}
+
+.botonera{
+	background: red;
+}
+
+#img-chambon{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.circle {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+
+	/*amarillo quemado
+	background: #E0B334;*/
+	/*gris*/
+	background: #464B51;
+	float: left;
+	margin: 20px;
+	/* width and height can be anything, as long as they're equal */
+}
+
+.ocupado{
+	background: #e1b334; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e1b334 0%, #eea420 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e1b334), color-stop(100%,#eea420)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #e1b334 0%,#eea420 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1b334', endColorstr='#eea420',GradientType=0 ); /* IE6-9 */
+}
+
+.ocupado p{
+	color: #464B51 !important;
+}
+
+
+
+.circle p {
+	position: relative;
+	text-align: center;
+	top: 27px;
+	text-transform: uppercase;
+	color: white;
+}
+
+
+/*botonera*/
+
+.boton_main{
+	background: 
+}
+
+.btn_act_vendedor{
+
+}
+
+.btn_act_activos{
+
+}
+
+.btn_act_vendedores{
+
+}
+
+/*Mensaje de llamado a carro*/
+
+.mensaje_notificacion{
+	position: absolute;
+	top:50%;
+	margin-left: 310px;
+	margin-top: -210px;
+	width: 600px;
+	height: 400px;
+	background: white;
+	padding: 20px;
+}
+
+/*App TV*/
+
+.container_apptv{
+	margin: auto;
+	width: 1280px;
+	height: 800px;
+}
+
+.banner_app_tv{
+	padding: 40px 0;
+	overflow: hidden;
+	border-bottom: 3px solid #e1b334;
+}
+
+.logo_chevrolet{
+	width: 620px;
+	float: left;
+}
+
+.ultimo_turno{
+	font-size: 20px;
+	margin: 20px 0 0 0;
+}
+
+.item{
+	width: 1280px;
+	height: 150px;
+	padding: 20px;
+	margin: 20px 0 0 0;
+	background: #e1b334; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e1b334 0%, #eea420 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e1b334), color-stop(100%,#eea420)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #e1b334 0%,#eea420 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1b334', endColorstr='#eea420',GradientType=0 ); /* IE6-9 */
+
+}
+
+.subtitle_apptv{
+	font-weight: 300px;
+	font-size: 40px;
+	margin: 10px 0 0 0;
+	padding: 0;
+}
+
+.gris{
+	color: #464B51;
+}
+
+.lista_peticiones{
+	height: 610px;
+	overflow-y: hidden;
+	color: #464B51;
+}
+
+.title_apptv{
+	font-size: 60px;
+	margin: 0;
+	padding: 0;
+	color: #464B51;
+}
+
+
+.boton_tipo_user_tombola{
+	padding: 20px;
+	background: rgba(224,179,52,0.6);
+}
+
+.btn_activo_user_tombola{
+	background: #e1b334; /* Old browsers */
+
+}
+
+.campos_user_new{
+	display: none;
+}
+

@@ -1,0 +1,34 @@
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/underscore.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<script type="text/javascript" src="/javascripts/foundation.min.js"></script>
+<link rel='stylesheet' href='/stylesheets/foundation.min.css' />
+<script type="text/javascript" src="/javascripts/app_vendedor_ang.js"></script>
+<script type="text/javascript" src="/javascripts/timers.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body ng-app="vendedores">
+	<div class="row" >
+		<div class="large-12 column" ng-controller="LoginCtr">
+
+			<div class="recibiendo" ng-hide="ocupado">
+				<h1>Digita tu cedula</h1>
+				<input type="text" ng-model="cedula">
+				<input type="button" value="entrar" ng-click="verificarCedula()">
+			</div>
+			<div class="llamada" ng-show=llamando>
+				<input type="button" value="aceptar_llamada" ng-click="aceptarLlamada()">
+			</div>
+			<div class="atendiendo" ng-show="ocupado">
+				<h1>{{comprador}}</h1>
+				<h1>{{carro}}</h1>
+				<input type="button" value="disponible" ng-click="volverDisponible()">
+			</div>
+
+		</div>
+	</div>
+</body>
