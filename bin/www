@@ -2,11 +2,16 @@
 var debug = require('debug')('server_catalogo');
 var app = require('../app');
 var func = require('./funciones');
+var dashboard_f = require('./dashb_funciones.js');
 var Cliente = require('../models/cliente');
 
-
+/*Init*/
+//dashboard_f.crear_dashboard();
 // func.calcular_vendedormasventas('30/10/2014');
-func.calcular_consecionariomasventas('30/10/2014');
+// func.calcular_consecionariomasventas('30/10/2014');
+
+dashboard_f.obtener_carro_mas_consultado_especifico('10/11/2014');
+
 
 var io = require('socket.io').listen(app.listen(3001, function(){
   console.log("Aplicacion de catalogo corriendo en el puerto " + 3001);
@@ -16,13 +21,12 @@ io.sockets.on('connection', function (socket) {
 	console.log("nuevo dispositivo conectado");
 
 	socket.on('create_user', function (data) {
-		var cliente = new Cliente({
-    		name: data.nombre,
-			dni:  data.dni,
-			celphone:  data.telefono,
-			correo :  data.correo
-    	});
-
+    var cliente = new Cliente({
+      name: data.nombre,
+      dni:  data.dni,
+      celphone:  data.telefono,
+      correo :  data.correo
+    });
 
 		cliente.consulta.push(data.carro);
 
@@ -75,6 +79,9 @@ io.sockets.on('connection', function (socket) {
 
 	/*When the customer is new the system*/
     socket.on('call_seller', function (data) {
+      console.log('-----call_seller------');
+      console.log(data);
+
     	func.siguienteTurno(io, socket, data);
     });
 
@@ -122,6 +129,10 @@ io.sockets.on('connection', function (socket) {
 
     });
 
+
+    socket.on('carro_consulta', function(data){
+      dashboard_f.aumentar_llamadas(data.car,data.user._id);
+    });
 
     socket.on('seller_acepted', function (data) {
 

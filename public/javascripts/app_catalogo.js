@@ -2,7 +2,7 @@ $(function(){
 
     var repeater = {};
     var user_data = {};
-    var carro = 'Camaro';
+    var carro = 'Tahoe';
 
     var socket = io.connect('http://192.168.1.106:3001');
 
@@ -76,8 +76,9 @@ $(function(){
 
     var call_seller =  function(){
 
-
         socket.emit('call_seller', {car:carro, user: user_data});
+        socket.emit('carro_consulta', {car:carro, user: user_data});
+
         repeater = TimersJS.multi(10000, 4, function(repetition) {
             socket.emit('call_seller', {car:carro, user: user_data});
 

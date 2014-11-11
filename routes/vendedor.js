@@ -323,7 +323,7 @@ router.get('/agendar/:dia/:hora/:id_cliente', function(req, res){
 
 router.get('/ver_agenda/:dia', function(req, res){
   console.log(req.params.dia);
-  
+
 
   Agenda.aggregate(
     {$match : {dia: ''+req.params.dia}},

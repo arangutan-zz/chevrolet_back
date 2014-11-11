@@ -2,91 +2,11 @@ var Cliente = require('../models/cliente');
 var Vendedor = require('../models/vendedor');
 var Concesionario = require('../models/concesionario');
 var Dashboard = require('../models/dashboard');
+var dashboard_f = require('./dashb_funciones.js');
 
 var obtenerFechaString = function(){
 	var d = new Date();
 	return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()
-}
-
-/*Funciones Dashboard*/
-
-var crearDashboard =  function(){
-	var dashboard = new Dashboard({
-		day: obtenerFechaString(),
-		fecha:  Date()
-	}).save(function (err, obj) {
-		if (err) return console.error(err);
-	  	console.log(obj);
-	});
-}
-
-
-
-var aumentarLlamadas = function(fecha){
-	Dashboard.findOne({day : fecha}, function(err, dashboard){
-		if (err) {return console.log("error");};
-
-		if (dashboard){
-			dashboard.calls = dashboard.calls + 1;
-
-			dashboard.save(function(err,dashb){
-				//no se pudo guardar
-			});
-
-		}else{
-			//no se encontro para aumentar
-		}
-
-	});
-}
-
-var calcular_vendedormasventas = function(fecha){
-
-	Vendedor.find({ 'ventas.day': fecha })
-			.select('name num_ventas')
-			.sort({'num_ventas': 'desc'})
-			.exec(function(err,vendedores){
-		if (err) {return console.log("error");};
-
-		if (vendedores) {
-			console.log(vendedores);
-
-		} else{
-
-		};
-	});
-}
-
-var calcular_consecionariomasventas = function(fecha){
-	Vendedor.aggregate(
-		{ $group:
-			{ _id: '$concesionario', total_sells: { $sum: "$num_ventas" } }
-		},
-		function (err, res) {
-			if (err) return handleError(err);
-			console.log(res);
-		}
-	);
-}
-
-
-
-var aumentarVendidos = function(fecha){
-	Dashboard.findOne({day : fecha}, function(err, dashboard){
-		if (err) {return console.log("error");};
-
-		if (dashboard){
-			dashboard.total_sells = dashboard.total_sells + 1;
-
-			dashboard.save(function(err,dashb){
-				//no se pudo guardar
-			});
-
-		}else{
-			//no se encontro para aumentar
-		}
-
-	});
 }
 
 var siguienteTurno = function(io, socket, data){
@@ -145,96 +65,96 @@ var siguienteTurno = function(io, socket, data){
 	});
 }
 
-var siguienteTurnoSinTv = function(io, socket, data){
-	console.log("entro a calcular turno");
-	Concesionario.findOne({atendiendo : true},function(err,c_atendiendo){
-		if (err) {console.log("error");};
-		if (c_atendiendo) {
-
-			Concesionario.count({}, function( err, count){
-
-			    console.log( "Nummero de consecionarios: "+ count +" van en el turno "+ c_atendiendo.turno);
-
-			    if (c_atendiendo.turno + 1 > count) {
-			    	console.log("volver a empezar");
-
-			    	Concesionario.findOne({turno : 1},function(err,c_primer){
-			    		c_primer.atendiendo = true;
-			    		c_atendiendo.atendiendo = false;
-			    		c_atendiendo.save(function(err,c_aten){
-			    			c_primer.save(function(err,c_primer){
-			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
-
-			    				//return c_primer;
-			    			});
-			    		});
-			    	});
-
-			    } else{
-			    	console.log("siguiente");
-
-			    	Concesionario.findOne({turno : c_atendiendo.turno + 1},function(err,c_siguiente){
-			    		c_siguiente.atendiendo = true;
-			    		c_atendiendo.atendiendo = false;
-			    		c_atendiendo.save(function(err,c_aten){
-			    			c_siguiente.save(function(err,c_siguiente){
-			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
-			    				//return c_siguiente;
-			    			});
-			    		});
-			    	});
-			    }
-
-			})
-		}
-	});
-}
-
-
-var cancelarTurno = function(){
-	console.log("entro a cancelar turno");
-
-	Concesionario.findOne({atendiendo : true},function(err,c_atendiendo){
-		if (err) {console.log("error");};
-		if (c_atendiendo) {
-
-			Concesionario.count({}, function( err, count){
-
-			    console.log( "Nummero de consecionarios: "+ count +" van en el turno "+ c_atendiendo.turno);
-
-			    if (c_atendiendo.turno + 1 > count) {
-			    	console.log("volver a empezar");
-
-			    	Concesionario.findOne({turno : 1},function(err,c_primer){
-			    		c_primer.atendiendo = true;
-			    		c_atendiendo.atendiendo = false;
-			    		c_atendiendo.save(function(err,c_aten){
-			    			c_primer.save(function(err,c_primer){
-			    				console.log(c_primer);
-			    			});
-			    		});
-			    	});
-
-			    } else{
-			    	console.log("siguiente");
-
-			    	Concesionario.findOne({turno : c_atendiendo.turno + 1},function(err,c_siguiente){
-			    		c_siguiente.atendiendo = true;
-			    		c_atendiendo.atendiendo = false;
-			    		c_atendiendo.save(function(err,c_aten){
-			    			c_siguiente.save(function(err,c_siguiente){
-			    				console.log(c_siguiente);
-			    			});
-			    		});
-			    	});
-			    }
-
-			})
-		} else{
-
-		};
-	});
-}
+// var siguienteTurnoSinTv = function(io, socket, data){
+// 	console.log("entro a calcular turno");
+// 	Concesionario.findOne({atendiendo : true},function(err,c_atendiendo){
+// 		if (err) {console.log("error");};
+// 		if (c_atendiendo) {
+//
+// 			Concesionario.count({}, function( err, count){
+//
+// 			    console.log( "Nummero de consecionarios: "+ count +" van en el turno "+ c_atendiendo.turno);
+//
+// 			    if (c_atendiendo.turno + 1 > count) {
+// 			    	console.log("volver a empezar");
+//
+// 			    	Concesionario.findOne({turno : 1},function(err,c_primer){
+// 			    		c_primer.atendiendo = true;
+// 			    		c_atendiendo.atendiendo = false;
+// 			    		c_atendiendo.save(function(err,c_aten){
+// 			    			c_primer.save(function(err,c_primer){
+// 			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+//
+// 			    				//return c_primer;
+// 			    			});
+// 			    		});
+// 			    	});
+//
+// 			    } else{
+// 			    	console.log("siguiente");
+//
+// 			    	Concesionario.findOne({turno : c_atendiendo.turno + 1},function(err,c_siguiente){
+// 			    		c_siguiente.atendiendo = true;
+// 			    		c_atendiendo.atendiendo = false;
+// 			    		c_atendiendo.save(function(err,c_aten){
+// 			    			c_siguiente.save(function(err,c_siguiente){
+// 			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+// 			    				//return c_siguiente;
+// 			    			});
+// 			    		});
+// 			    	});
+// 			    }
+//
+// 			})
+// 		}
+// 	});
+// }
+//
+//
+// var cancelarTurno = function(){
+// 	console.log("entro a cancelar turno");
+//
+// 	Concesionario.findOne({atendiendo : true},function(err,c_atendiendo){
+// 		if (err) {console.log("error");};
+// 		if (c_atendiendo) {
+//
+// 			Concesionario.count({}, function( err, count){
+//
+// 			    console.log( "Nummero de consecionarios: "+ count +" van en el turno "+ c_atendiendo.turno);
+//
+// 			    if (c_atendiendo.turno + 1 > count) {
+// 			    	console.log("volver a empezar");
+//
+// 			    	Concesionario.findOne({turno : 1},function(err,c_primer){
+// 			    		c_primer.atendiendo = true;
+// 			    		c_atendiendo.atendiendo = false;
+// 			    		c_atendiendo.save(function(err,c_aten){
+// 			    			c_primer.save(function(err,c_primer){
+// 			    				console.log(c_primer);
+// 			    			});
+// 			    		});
+// 			    	});
+//
+// 			    } else{
+// 			    	console.log("siguiente");
+//
+// 			    	Concesionario.findOne({turno : c_atendiendo.turno + 1},function(err,c_siguiente){
+// 			    		c_siguiente.atendiendo = true;
+// 			    		c_atendiendo.atendiendo = false;
+// 			    		c_atendiendo.save(function(err,c_aten){
+// 			    			c_siguiente.save(function(err,c_siguiente){
+// 			    				console.log(c_siguiente);
+// 			    			});
+// 			    		});
+// 			    	});
+// 			    }
+//
+// 			})
+// 		} else{
+//
+// 		};
+// 	});
+// }
 
 
 var buscarVendedorDni = function(dni){
@@ -281,7 +201,7 @@ var cambiarEstadoCompraNew = function(data,socket){
 
 			vendedor.num_ventas = vendedor.num_ventas + 1 ;
 
-			cliente.save(function (err, obj) {
+			cliente.save(function (err, cliente) {
 				if (err) {
 					console.log('entro al error');
 					console.error(err);
@@ -289,6 +209,8 @@ var cambiarEstadoCompraNew = function(data,socket){
 				}
 				vendedor.save(function(err, vendedor_s){
 					socket.emit('mensaje_compra',{cod: 1, msg: 'Muchas Gracias por su compra'});
+
+					dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id);
 				});
 
 			});
@@ -341,6 +263,8 @@ var cambiarEstadoCompra = function(data,socket){
 
 							socket.emit('mensaje_compra',{cod: 1, msg: 'Muchas Gracias por su compra'});
 
+							dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id);
+
 						});
 
 
@@ -380,6 +304,7 @@ var eliminarPrimerVendedorCola = function (id_concecionario) {
 			}
 		})
 }
+
 
 var elmininarVendedorCola = function (id_concecionario, id_vendedor) {
 
@@ -487,6 +412,8 @@ var buscarVendedor = function (data,socket) {
 	});
 }
 
+
+
 var agregarColaConcesionario = function (id_concecionario, id_vendedor) {
 
 	//busca si ya esta la cedula
@@ -566,6 +493,7 @@ var activarVendedor = function (data,socket) {
 	});
 }
 
+
 var obtenerDisponibles = function(data,socket){
 
 	Vendedor.find({ concesionario: data.concesionario},function(err,vendedores){
@@ -576,6 +504,7 @@ var obtenerDisponibles = function(data,socket){
 		}
 	});
 }
+
 
 var buscarConsecionario = function(data,socket){
 	Concesionario.findOne({username: data.username},function(err,consecionario){
@@ -588,6 +517,7 @@ var buscarConsecionario = function(data,socket){
 		}
 	});
 }
+
 
 var desocuparVendedor =  function(data){
 	Concesionario.findOne({username: data.username},function(err,consecionario){
@@ -610,8 +540,8 @@ var desocuparVendedor =  function(data){
 
 
 exports.siguienteTurno = siguienteTurno;
-exports.siguienteTurnoSinTv = siguienteTurnoSinTv;
-exports.cancelarTurno = cancelarTurno;
+//exports.siguienteTurnoSinTv = siguienteTurnoSinTv;
+//exports.cancelarTurno = cancelarTurno;
 exports.cambiarEstadoCompra = cambiarEstadoCompra;
 exports.cambiarEstadoCompraNew = cambiarEstadoCompraNew;
 exports.cambiarEstadoAtendido = cambiarEstadoAtendido;
@@ -623,8 +553,3 @@ exports.buscarConsecionario = buscarConsecionario;
 exports.desocuparVendedor = desocuparVendedor;
 exports.elmininarVendedorCola = elmininarVendedorCola;
 exports.vendedorUltimoCola = vendedorUltimoCola;
-
-/**/
-
-exports.calcular_vendedormasventas = calcular_vendedormasventas;
-exports.calcular_consecionariomasventas = calcular_consecionariomasventas;

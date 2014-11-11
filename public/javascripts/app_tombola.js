@@ -1,13 +1,13 @@
 $(function(){
 
-    var socket = io.connect('http://192.168.1.100:3001');
+    var socket = io.connect('http://192.168.1.106:3001');
 
     $('#send').on('click',function(){
 
 
         if ($('.user_new').hasClass('btn_activo_user_tombola')) {
 
-            
+
 
             var carro = $('#carro_compro').val();
             var dni_u  = $('#cedula_new').val();
@@ -16,7 +16,7 @@ $(function(){
             var nombre_u  = $('#nombre_new').val();
             var dni_v = $('#cedula_vendedor').val();
 
-            
+
 
             if ( dni_u != '' && celular_u != '' && correo_u != '' && nombre_u != '' && dni_v != '' && carro != '') {
                 var datos = {
@@ -25,9 +25,9 @@ $(function(){
                     email_user : correo_u,
                     name_user : nombre_u,
                     dni_seller: dni_v,
-                    car: carro   
+                    car: carro
                 }
-                
+
                 //console.log(obj);
                 socket.emit('aprobar_compra_new',datos);
             }else{
@@ -50,7 +50,7 @@ $(function(){
             }else{
                 alert('por favor completa todos los campos');
             }
-           
+
         };
 
         /*
@@ -66,10 +66,10 @@ $(function(){
         */
     });
 
- 
+
     socket.on('mensaje_compra', function (data) {
         console.log(data);
-        
+
         switch(data.cod){
             case 1:
                 $('#carro_compro').val('');
@@ -91,17 +91,17 @@ $(function(){
             $('.campos_user_new').show();
             $('.campos_user_old').hide();
         };
-    }); 
+    });
 
     $('.user_old').on('click',function(){
         if (!$(this).hasClass('btn_activo_user_tombola')) {
             $('.user_new').removeClass('btn_activo_user_tombola');
             $(this).addClass('btn_activo_user_tombola');
-        
+
             //mostrar campos
             $('.campos_user_new').hide();
             $('.campos_user_old').show();
         };
-    }); 
+    });
 
 });
