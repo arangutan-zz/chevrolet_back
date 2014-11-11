@@ -7,7 +7,6 @@ var Consultado = require('../models/carro_mas_consultado');
 var Agenda = require('../models/agenda');
 
 
-
 var obtenerFechaString = function(){
   var d = new Date();
   return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()

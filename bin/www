@@ -17,6 +17,7 @@ var io = require('socket.io').listen(app.listen(3001, function(){
   console.log("Aplicacion de catalogo corriendo en el puerto " + 3001);
 }));
 
+
 io.sockets.on('connection', function (socket) {
 	console.log("nuevo dispositivo conectado");
 
@@ -212,7 +213,6 @@ io.sockets.on('connection', function (socket) {
       console.log('no atendio');
       func.vendedorUltimoCola(data);
     })
-
 
 });
 

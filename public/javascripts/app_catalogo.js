@@ -4,6 +4,9 @@ $(function(){
     var user_data = {};
     var carro = 'Tahoe';
 
+
+
+
     var socket = io.connect('http://192.168.1.106:3001');
 
     $('#send').on('click',function(){
@@ -24,8 +27,10 @@ $(function(){
 
         var datos = { dni: $('#cedula_o').val(), carro : car};
 
-        socket.emit('find_user',datos);
+        //socket.emit('find_user',datos);
 
+
+        socket.emit('sebastian',{prueba:'datos',adasd:'adsasd'});
 
         //socket.emit('desocupar_vendedor', { carro: 'Spark' , username: 'autonal'});
     });
