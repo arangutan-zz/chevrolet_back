@@ -247,3 +247,119 @@ header{
 	display: none;
 }
 
+/*------------------------ APLICACIÓN VENDEDORES -----------------------------*/
+
+@font-face {
+    font-family: "chevroletFont";
+    src: url("../font/LouisRegular.ttf");
+    src: url("../font/LouisRegular.ttf") format("truetype");
+}
+
+
+body{
+	font: 12pt "chevroletFont", Arial, sans-serif !important;
+	background: -webkit-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#ECEFF1, #BBBAC0) !important; /* Standard syntax (must be last) */
+    border-bottom: 10px #E0B334 solid;
+    color: #494D50 !important;
+    overflow-x: hidden !important;
+}
+
+.header{
+	margin: 4rem 0 5rem 0;
+}
+
+.recibiendo{
+	background: -webkit-linear-gradient(#ECEFF1, #BBBAC0); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#ECEFF1, #BBBAC0); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#ECEFF1, #BBBAC0); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#ECEFF1, #BBBAC0); /* Standard syntax (must be last) */
+	height: 100%;
+}
+
+.entrar{
+	background: url("../images/btn_enviar_1.png") no-repeat center;
+	position: relative;
+	height: 37px;
+	width: 125px;
+	margin: 1rem 0;
+}
+
+.recibiendo input{
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    height: 50px;
+    padding: 0 1rem;
+}
+
+.recibiendo p{
+	font-style: italic;
+}
+
+input {
+	width: 100%;
+}
+
+p{
+	margin-bottom: 0 !important;
+}
+
+.btn_entrar{
+	background: url("../images/btn_enviar.png") no-repeat center;
+	margin-top: 2rem;
+	cursor: pointer;
+	background-size: contain;
+}
+
+.atendiendo, .llamada{
+	height: 100%;
+	padding-top: 3rem;
+	background: white;
+}
+
+.atendiendo .btn_entrar p{
+	margin: 0;
+	padding: 1rem 0;
+	text-transform: uppercase;
+	font-style: italic;
+	font-size: 16pt !important;
+}
+
+.atendiendo p, .llamada p, .espera p, .espera{
+	font-size: 20pt !important;
+}
+
+.espera p{
+	font-style: italic;
+}
+
+.atendiendo p.comprador, .atendiendo p.carro, .llamada p.comprador, .llamada p.carro{
+	text-transform: uppercase;
+	font-size: 28pt !important;
+}
+
+.atendiendo p.carro, .llamada p.carro{
+	font-weight: bolder
+}
+
+.llamada p.comprador_tag{
+	text-transform: uppercase;
+	color: #E0B334;
+}
+
+.espera_row{
+	background-color: #474B54;
+	color: white;
+	margin-left: -1000% !important;
+	margin-right: -1000% !important;
+	padding: 1rem 0;
+}
+
+.text_espera{
+	padding-top: 3rem;
+}

@@ -6,6 +6,7 @@
 <link rel='stylesheet' href='/stylesheets/style.css' />
 <script type="text/javascript" src="/javascripts/foundation.min.js"></script>
 <link rel='stylesheet' href='/stylesheets/foundation.min.css' />
+<link rel='stylesheet' href='/stylesheets/foundation.css' />
 <script type="text/javascript" src="/javascripts/app_vendedor_ang.js"></script>
 <script type="text/javascript" src="/javascripts/timers.js"></script>
 
@@ -15,18 +16,209 @@
 	<div class="row" >
 		<div class="large-12 column" ng-controller="LoginCtr">
 
-			<div class="recibiendo" ng-hide="ocupado">
-				<h1>Digita tu cedula</h1>
-				<input type="text" ng-model="cedula">
-				<input type="button" value="entrar" ng-click="verificarCedula()">
+
+			<!--  _____________________________________ Vista Login   _____________________________________  -->
+			<div class="recibiendo columns large-12" ng-hide="espera">
+				<div class="row">
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+					<div class="header columns large-8 small-12 text-center">
+						<img src="/images/logo-chevrolet-app-vendedores.png">
+					</div>
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+					<div class="columns large-8 small-12">
+						<p>Cédula</p>
+						<input type="text" ng-model="cedula">
+					</div>
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="columns large-2 show-for-large-up" >
+						<br>
+					</div>
+					<div class="entrar columns large-8 small-12 text-center" ng-click="verificarCedula()">
+					</div>
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>	
+				</div>
 			</div>
-			<div class="llamada" ng-show=llamando>
-				<input type="button" value="aceptar_llamada" ng-click="aceptarLlamada()">
+
+			<!--     _____________________________________  Vista Espera  _____________________________________  -->
+
+			<div class="espera columns large-12" ng-show="espera">
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+
+					<div class="header columns large-8 small-12 text-center">
+						<img src="/images/logo-chevrolet-app-vendedores.png">
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+				
+				<div class="row espera_row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						Hola
+						<p class="vendedor">
+							JAIME HERNÁNDEZ
+						</p>
+						¡Ya estás activo!
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+
+					<div class="text_espera columns large-8 small-12 text-center">
+						<p>
+							En cualquier momento recibirás una notificación para que te dirijas hacia el carro donde te necesitan
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 btn_entrar text-center" ng-click="">
+						<p>
+							Salir
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>	
+				</div>
 			</div>
-			<div class="atendiendo" ng-show="ocupado">
+
+			<!-- _____________________________________ Vista Llamada   _____________________________________ -->
+
+			<div class="llamada columns large-12" ng-show="llamando">
 				<h1>{{comprador}}</h1>
 				<h1>{{carro}}</h1>
-				<input type="button" value="disponible" ng-click="volverDisponible()">
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p>
+							Te han llamado del carro
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p class="carro text-center">
+							{{carro}}
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p class="comprador_tag">
+							Comprador:
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p class="comprador text-center">
+							{{comprador}}
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+				<div class="row">
+					<div class="columns large-3 show-for-large-up"><br>
+					</div>
+					<div class="columns large-3 small-6 btn_entrar text-center" ng-click="aceptarLlamada()">
+						<p>
+							Aceptar
+						</p>
+					</div>
+					<div class="columns large-3 small-6 btn_entrar text-center" ng-click="volverDisponible()">
+						<p>
+							Rechazar
+						</p>
+					</div>
+					<div class="columns large-3 show-for-large-up"><br>
+					</div>
+				</div>	
+			</div>
+
+
+			<!-- _____________________________________ Vista Ocupado   _____________________________________ -->
+
+
+			<div class="atendiendo columns large-12" ng-show="ocupado">
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p>
+							Estás atendiendo a
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p class="comprador text-center">
+							{{comprador}}
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p>
+							en
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+
+				<div class="row">
+					<div class="columns large-2 show-for-large-up"><br></div>
+					<div class="columns large-8 small-12 text-center">
+						<p class="carro text-center">
+							{{carro}}
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up"><br></div>
+				</div>
+				<div class="row">
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+					<div class="columns large-8 btn_entrar text-center" ng-click="volverDisponible()">
+						<p>
+							Ya estoy libre
+						</p>
+					</div>
+					<div class="columns large-2 show-for-large-up">
+						<br>
+					</div>
+				</div>	
 			</div>
 
 		</div>
