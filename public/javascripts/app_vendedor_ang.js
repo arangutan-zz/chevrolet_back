@@ -1,5 +1,3 @@
-var socket = io.connect('http://192.168.1.106:3001');
-
 var app = angular.module('vendedores', []);
 
 // app.config(['$routeProvider',
@@ -14,26 +12,51 @@ var app = angular.module('vendedores', []);
 //   }]);
 
 
-app.controller('LoginCtr', ['$scope', function($scope) {
+app.factory('socket',function () {
+  var socket = io.connect('http://192.168.1.106:3001');  
+  return socket;
+})
 
 
-  var datos_llamada = null;
+app.controller('LoginCtr', ['$scope','socket', function($scope,socket) {
+
+
+  //var datos_llamada = null;
   var timer = null;
   $scope.ocupado = false;
   $scope.llamando = false;
+  $scope.login = true;
+  $scope.tengodato = true;
+  $scope.espera = false;
   $scope.cedula = '';
   $scope.carro = '';
-  $scope.nombre = '';
+  $scope.nombrevendedor = '';
+  $scope.nombreusuario ="";
+  var datos = {
+    nombrevendedor: "",
+    carro: "",
+    nombreusario: "",
+    concesionario: "",
+    tablet_id: "", 
+    turno_id: "",
+    user_id: ""
+  };
 
-  //socket.emit('activar_vendedor',{cedula:'222222'});
+
+   //socket.emit('activar_vendedor',{cedula:'222222'});
   //socket.emit('desactivar_vendedor',{concesionario:'542c8076aa653d0000759661', vendedor:'545267cbcb21d88a6ecfbdcf'});
 
 
+
+
   var guardar_user = function (data) {
+
     sessionStorage.setItem("cedula", data.vendedor.cedula);
     sessionStorage.setItem("id", data.vendedor._id);
     sessionStorage.setItem("concesionario", data.vendedor.concesionario);
     sessionStorage.setItem("nombre", data.vendedor.name);
+
+    console.log(sessionStorage.getItem("nombre"));
   }
 
 
@@ -55,10 +78,12 @@ app.controller('LoginCtr', ['$scope', function($scope) {
   }
 
 
+  
+
   /*Si esta logueado previamente no muestra la pantalla de login inicial si no muestra la segunda esperando la llamada a vendedor*/
-  // if (!user_logueado()) {
-  //   socket.emit('activar_vendedor',{cedula:'444444'});
-  // }
+  if (user_logueado()) {
+     socket.emit('activar_vendedor',{cedula:user_logueado().cedula, consulta: true});
+  }
 
 
 
@@ -67,20 +92,35 @@ app.controller('LoginCtr', ['$scope', function($scope) {
     /*
       1:El vendedor existe y devuelve el objeto
       2:El vendedor no se encontro devuelve un mensaje de error
+      3:El vendedor se deslogueó satisfactoriamente
     */
 
     switch (data.cod){
       case 1:
-          console.log(data);
-
           guardar_user(data);
-
+          console.log(data)
+          datos.nombrevendedor = user_logueado().nombre;
+          $scope.nombrevendedor = datos.nombrevendedor;
+          if (!data.vendedor.disponible){
+            $scope.tengodato = false;
+            $scope.ocupado = true;
+            $scope.login = false;
+          }else{
+            $scope.espera = true;
+            $scope.login = false;  
+          }
+          
+          $scope.$digest();
+          //console.log($scope.espera);
         break;
       case 2:
           console.log(data);
         break;
       case 3:
-
+          $scope.espera = false;
+          $scope.login = true;
+          $scope.cedula = '';
+          $scope.$digest();
         break;
       case 4:
 
@@ -102,14 +142,26 @@ app.controller('LoginCtr', ['$scope', function($scope) {
           console.log('es su turno');
           console.log(data);
 
-          datos_llamada = data;
-          llamando = true;
+          //datos_llamada = data;
+          datos.carro = data.car;
+          datos.nombreusuario = data.user.name;
+          datos.tablet_id = data.tablet_id;
+          datos.turno_id = data.turno._id;
+          datos.user_id = data.user._id;
+          $scope.llamando = true;
+          $scope.espera = false;
+          $scope.nombreusuario = datos.nombreusuario;
+          $scope.carro = datos.carro;
+          $scope.$digest();
 
           timer = TimersJS.oneShot(10000, function() {
 
-            datos_llamada = null;
-            llamando = false;
-
+            datos.nombreusuario = "";
+            datos.tablet_id = "";
+            datos.turno_id = "";
+            $scope.llamando = false;
+            $scope.espera = true;
+            $scope.$digest();
 
             console.log('---------------------');
             console.log("No atendio la llamada");
@@ -127,41 +179,40 @@ app.controller('LoginCtr', ['$scope', function($scope) {
   });
 
 
-  $scope.aceptarLlamada = function(){
+  $scope.aceptarLlamada = function(data){
 
-    //console.log('santiago');
+    //$scope.nombre = datos_llamada.user.name;
+    //$scope.carro = datos_llamada.car;
+    
 
-    $scope.nombre = datos_llamada.user.name;
-    $scope.carro = datos_llamada.car;
-
-    if (user && datos_llamada) {
-
+    if (user_logueado() && datos.nombreusuario!="") {
+      $scope.tengodato = true;
       timer.kill();
 
       var user = user_logueado();
 
       var obj = {
-          tablet_id : datos_llamada.tablet_id,
+          tablet_id : datos.tablet_id,
           vendedor_id : user.id,
-          consecionario_id : datos_llamada.turno._id,
-          user_id :  datos_llamada.user._id,
-          car : datos_llamada.car
+          consecionario_id : datos.turno_id,
+          user_id :  datos.user_id,
+          car : datos.carro
       }
 
-      //console.log(datos_llamada);
+      console.log(datos);
 
       /*Marcar en estado ocupado*/
-
+      
       $scope.ocupado = true;
+      $scope.llamando = false;
+      //$scope.$digest();
       socket.emit('seller_acepted',obj);
-
+      
     }
   }
 
   $scope.verificarCedula = function(){
-    //console.log(user_logueado());
-    //console.log();
-
+    //console.log($scope.cedula);
     socket.emit('activar_vendedor',{cedula: $scope.cedula});
 
   }
@@ -170,10 +221,21 @@ app.controller('LoginCtr', ['$scope', function($scope) {
 
     var user = user_logueado();
     if (user) {
-      socket.emit('activar_vendedor',{cedula: user.cedula});
+      $scope.ocupado = false;
+      $scope.espera = true;
+      socket.emit('activar_vendedor',{cedula: user.cedula, again: true});
     }
 
   }
 
+  $scope.logout_usuario = function (){
+    socket.emit('desactivar_vendedor',{concesionario: user_logueado().concesionario, vendedor:user_logueado().id});    
+    sessionStorage.clear();
+  }
 
+
+  $scope.rechazarLlamada = function(){
+    $scope.llamando = false;
+    $scope.espera = true;
+  }
 }]);

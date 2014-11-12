@@ -18,7 +18,7 @@
 
 
 			<!--  _____________________________________ Vista Login   _____________________________________  -->
-			<div class="recibiendo columns large-12" ng-hide="espera">
+			<div class="recibiendo columns large-12" ng-show="login">
 				<div class="row">
 					<div class="columns large-2 show-for-large-up">
 						<br>
@@ -72,7 +72,7 @@
 					<div class="columns large-8 small-12 text-center">
 						Hola
 						<p class="vendedor">
-							JAIME HERNÁNDEZ
+							{{nombrevendedor}}
 						</p>
 						¡Ya estás activo!
 					</div>
@@ -91,7 +91,7 @@
 				</div>
 				<div class="row">
 					<div class="columns large-2 show-for-large-up"><br></div>
-					<div class="columns large-8 small-12 btn_entrar text-center" ng-click="">
+					<div class="columns large-8 small-12 btn_entrar text-center" ng-click="logout_usuario()">
 						<p>
 							Salir
 						</p>
@@ -103,8 +103,6 @@
 			<!-- _____________________________________ Vista Llamada   _____________________________________ -->
 
 			<div class="llamada columns large-12" ng-show="llamando">
-				<h1>{{comprador}}</h1>
-				<h1>{{carro}}</h1>
 				<div class="row">
 					<div class="columns large-2 show-for-large-up"><br></div>
 					<div class="columns large-8 small-12 text-center">
@@ -139,7 +137,7 @@
 					<div class="columns large-2 show-for-large-up"><br></div>
 					<div class="columns large-8 small-12 text-center">
 						<p class="comprador text-center">
-							{{comprador}}
+							{{nombreusuario}}
 						</p>
 					</div>
 					<div class="columns large-2 show-for-large-up"><br></div>
@@ -152,7 +150,7 @@
 							Aceptar
 						</p>
 					</div>
-					<div class="columns large-3 small-6 btn_entrar text-center" ng-click="volverDisponible()">
+					<div class="columns large-3 small-6 btn_entrar text-center" ng-click="rechazarLlamada()">
 						<p>
 							Rechazar
 						</p>
@@ -167,44 +165,46 @@
 
 
 			<div class="atendiendo columns large-12" ng-show="ocupado">
-				<div class="row">
-					<div class="columns large-2 show-for-large-up"><br></div>
-					<div class="columns large-8 small-12 text-center">
-						<p>
-							Estás atendiendo a
-						</p>
+				<div ng-show="tengodato">
+					<div class="row">
+						<div class="columns large-2 show-for-large-up"><br></div>
+						<div class="columns large-8 small-12 text-center">
+							<p>
+								Estás atendiendo a
+							</p>
+						</div>
+						<div class="columns large-2 show-for-large-up"><br></div>
 					</div>
-					<div class="columns large-2 show-for-large-up"><br></div>
-				</div>
 
-				<div class="row">
-					<div class="columns large-2 show-for-large-up"><br></div>
-					<div class="columns large-8 small-12 text-center">
-						<p class="comprador text-center">
-							{{comprador}}
-						</p>
+					<div class="row">
+						<div class="columns large-2 show-for-large-up"><br></div>
+						<div class="columns large-8 small-12 text-center">
+							<p class="comprador text-center">
+								{{nombreusuario}}
+							</p>
+						</div>
+						<div class="columns large-2 show-for-large-up"><br></div>
 					</div>
-					<div class="columns large-2 show-for-large-up"><br></div>
-				</div>
 
-				<div class="row">
-					<div class="columns large-2 show-for-large-up"><br></div>
-					<div class="columns large-8 small-12 text-center">
-						<p>
-							en
-						</p>
+					<div class="row">
+						<div class="columns large-2 show-for-large-up"><br></div>
+						<div class="columns large-8 small-12 text-center">
+							<p>
+								en
+							</p>
+						</div>
+						<div class="columns large-2 show-for-large-up"><br></div>
 					</div>
-					<div class="columns large-2 show-for-large-up"><br></div>
-				</div>
 
-				<div class="row">
-					<div class="columns large-2 show-for-large-up"><br></div>
-					<div class="columns large-8 small-12 text-center">
-						<p class="carro text-center">
-							{{carro}}
-						</p>
+					<div class="row">
+						<div class="columns large-2 show-for-large-up"><br></div>
+						<div class="columns large-8 small-12 text-center">
+							<p class="carro text-center">
+								{{carro}}
+							</p>
+						</div>
+						<div class="columns large-2 show-for-large-up"><br></div>
 					</div>
-					<div class="columns large-2 show-for-large-up"><br></div>
 				</div>
 				<div class="row">
 					<div class="columns large-2 show-for-large-up">
@@ -220,6 +220,7 @@
 					</div>
 				</div>	
 			</div>
+
 
 		</div>
 	</div>
