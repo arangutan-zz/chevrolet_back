@@ -95,6 +95,9 @@ io.sockets.on('connection', function (socket) {
     /*When the customer is old the system, but want to see the same car o a diferente car*/
 
      socket.on('find_user', function (data) {
+       console.log('---asd----');
+      console.log(data);
+
 
      	Cliente.findOne({ dni: data.dni },function (err, cliente) {
 			if (err) return handleError(err);
@@ -119,7 +122,8 @@ io.sockets.on('connection', function (socket) {
 				obj = {
 			  		estado : 2,
 			  		msg: 'Este usuario no existe',
-            cedula: data.dni
+            cedula: data.dni,
+            car: data.carro
 			  	}
 
 			  	socket.emit('user_data',obj);
@@ -197,7 +201,9 @@ io.sockets.on('connection', function (socket) {
 
 
     socket.on('desactivar_vendedor',function (data){
-      func.elmininarVendedorCola(data.concesionario,data.vendedor);
+      console.log('-----se desactivo vendedor-------');
+      console.log(data);
+      func.elmininarVendedorCola(data.concesionario,data.vendedor,socket);
     });
 
 

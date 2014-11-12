@@ -11,7 +11,7 @@ var VendedorSchema   = new Schema({
 	fechasAsistio: [Date],
 	ventas: { type : Array , default: [] },
 	num_ventas : { type : Number , default: 0 },
-	disponible: Boolean
+	disponible: { type : Boolean, default: true }
 });
 
 
@@ -23,5 +23,5 @@ VendedorSchema.methods.aux = function () {
      	return algo;
 }
 
- 
+
 module.exports = mongoose.model('Vendedor', VendedorSchema);

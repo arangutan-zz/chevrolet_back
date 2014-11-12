@@ -27,10 +27,10 @@ $(function(){
 
         var datos = { dni: $('#cedula_o').val(), carro : car};
 
-        //socket.emit('find_user',datos);
+        socket.emit('find_user',datos);
 
 
-        socket.emit('sebastian',{prueba:'datos',adasd:'adsasd'});
+        //socket.emit('sebastian',{prueba:'datos',adasd:'adsasd'});
 
         //socket.emit('desocupar_vendedor', { carro: 'Spark' , username: 'autonal'});
     });
