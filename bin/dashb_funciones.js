@@ -7,6 +7,7 @@ var Consultado = require('../models/carro_mas_consultado');
 var Agenda = require('../models/agenda');
 
 
+
 var obtenerFechaString = function(){
   var d = new Date();
   return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()
@@ -22,6 +23,31 @@ var crear_dashboard =  function(){
       console.log(obj);
   });
 }
+
+var obtener_dashboard =  function(fecha){
+
+  if (fecha === 'hoy') {
+    fecha = obtenerFechaString()
+  }
+
+  Dashboard.findOne({day : fecha}, function(err, dashboard){
+    if (err) {return console.log("error");};
+
+    if (dashboard){
+
+        return dashboard;
+        //no se pudo guardar
+
+    }else{
+      //no se encontro para aumentar
+    }
+
+  });
+
+
+
+}
+
 
 var calcular_vendedor_mas_ventas = function(fecha){
 
@@ -174,8 +200,18 @@ var aumentar_llamadas = function(carro,id_user){
 
 }
 
+var enviar_dashboard_llamar_vendedor = function (socket,io) {
+    console.log('llamo al dash');
+    console.log('--------------------------------------------');
+    io.sockets.emit('poner_otro', {llamo_vendedor: 'sumele uno'});
+    //socket.emit('',{llamo_vendedor: 'sumele uno'});
+}
+
+
 
 exports.crear_dashboard = crear_dashboard;
+exports.obtenerFechaString = obtenerFechaString;
+exports.obtener_dashboard = obtener_dashboard;
 exports.aumentar_llamadas = aumentar_llamadas;
 exports.aumentar_vendidos = aumentar_vendidos;
 exports.calcular_consecionario_mas_ventas = calcular_consecionario_mas_ventas;
@@ -183,3 +219,4 @@ exports.calcular_vendedor_mas_ventas = calcular_vendedor_mas_ventas;
 exports.obtener_carro_mas_vendido_especifico = obtener_carro_mas_vendido_especifico;
 exports.obtener_carro_mas_vendido = obtener_carro_mas_vendido;
 exports.obtener_carro_mas_consultado_especifico = obtener_carro_mas_consultado_especifico;
+exports.enviar_dashboard_llamar_vendedor = enviar_dashboard_llamar_vendedor;
