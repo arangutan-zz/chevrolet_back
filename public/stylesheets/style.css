@@ -36,6 +36,11 @@ a {
 
 }
 
+
+h1, h2, h3, h4 ,h5, h6 {
+  font-family: 'chevroletFont';
+}
+
 .text-center{
 	text-align: center;
 }
@@ -140,7 +145,7 @@ header{
 /*botonera*/
 
 .boton_main{
-	background: 
+	background:
 }
 
 .btn_act_vendedor{
@@ -362,4 +367,33 @@ p{
 
 .text_espera{
 	padding-top: 3rem;
+}
+
+/*----------DASHBOARD-----------*/
+
+.datos_now{
+  margin: 50px;
+}
+
+.dato_dashboard{
+  font-size: 85px;
+}
+
+.dato_dashboard_largo{
+  height: 96px;
+  overflow: hidden;
+  font-size: 30px;
+}
+
+.bold{
+  font-weight:bold;
+}
+
+.mayusculas{
+  text-transform: uppercase;
+}
+
+.bg-negro{
+  margin: 20px 0;
+  border: solid 1px black;
 }

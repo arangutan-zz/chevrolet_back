@@ -25,8 +25,10 @@ var siguienteTurno = function(io, socket, data){
 			    	console.log("volver a empezar");
 
 			    	Concesionario.findOne({turno : 1},function(err,c_primer){
-			    		c_primer.atendiendo = true;
+
+							c_primer.atendiendo = true;
 			    		c_atendiendo.atendiendo = false;
+
 			    		c_atendiendo.save(function(err,c_aten){
 			    			c_primer.save(function(err,c_primer){
 
@@ -306,7 +308,7 @@ var eliminarPrimerVendedorCola = function (id_concecionario) {
 }
 
 
-var elmininarVendedorCola = function (id_concecionario, id_vendedor) {
+var elmininarVendedorCola = function (id_concecionario, id_vendedor, socket) {
 
 		Concesionario.update(
 			{ _id: id_concecionario },
@@ -316,6 +318,14 @@ var elmininarVendedorCola = function (id_concecionario, id_vendedor) {
 									console.log(err);
 					}else{
 									console.log("Successfully Eliminate");
+
+									if (socket) {
+										var obj ={
+											cod: 3,
+											msg: 'se elimino correctamente'
+										}
+										socket.emit('notify_vendedores',obj);
+									}
 					}
 			})
 
@@ -366,7 +376,11 @@ var cambiarEstadoAtendido = function(data){
 	// 	}
 	// });
 
-	elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+
+	Vendedor.update({_id:data.vendedor_id}, { $set: { disponible: false}}, function(err,obj){
+			elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+	})
+
 
 }
 
@@ -469,22 +483,39 @@ var activarVendedor = function (data,socket) {
 
 		if (model) {
 
-			model.asistio = true;
-			model.fechasAsistio.push(Date());
 
-			model.save(function(err,model){
-				if (model) {
-					agregarColaConcesionario(model.concesionario,model._id);
+			if (data.consulta) {
+				var obj = {
+					cod: 1,
+					vendedor:  model
+				}
 
-					var obj = {
-						cod: 1,
-						vendedor:  model
-					}
+				socket.emit('notify_vendedores',obj);
+			}else{
+				if (!data.again) {
+					model.fechasAsistio.push(Date());
+				}
 
-					socket.emit('notify_vendedores',obj);
-					//console.log(model);
-				};
-			});
+				model.asistio = true;
+				model.disponible = true;
+
+				model.save(function(err,model){
+					if (model) {
+						agregarColaConcesionario(model.concesionario,model._id);
+
+						var obj = {
+							cod: 1,
+							vendedor:  model
+						}
+
+						socket.emit('notify_vendedores',obj);
+						//console.log(model);
+					};
+				});
+			}
+
+
+
 
 		}
 		else{
