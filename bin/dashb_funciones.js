@@ -60,6 +60,12 @@ var calcular_vendedor_mas_ventas = function(fecha){
     if (vendedores) {
       console.log(vendedores);
 
+      if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'vendedor_ventas.name': res[0]._id ,'vendedor_ventas.units': res[0].total_sells  }}, function(err,obj){
+            console.log(res[0]);
+        });
+      }
+
     } else{
 
     };
@@ -74,6 +80,12 @@ var calcular_consecionario_mas_ventas = function(fecha){
     function (err, res) {
       if (err) return handleError(err);
       console.log(res);
+
+      if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'concesionario_ventas.name': res[0]._id ,'concesionario_ventas.units': res[0].total_sells  }}, function(err,obj){
+            console.log(res[0]);
+        });
+      }
     }
   );
 }
@@ -116,23 +128,12 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos){
 
 
 var obtener_carro_mas_vendido_especifico = function(fecha){
-  Vendido.aggregate(
-    {
-      $match: {dia: ''+fecha}
-    },
-    { $group:
-      { _id: '$carro', total_sells: { $sum: 1 } }
-    },
-    {
-      $sort: {total_sells: -1}
-    },
-    function(err,res){
-      console.log(res);
-  })
-}
 
-var obtener_carro_mas_consultado_especifico = function(fecha){
-  Consultado.aggregate(
+  if (fecha === 'hoy') {
+    fecha = obtenerFechaString()
+  }
+
+  Vendido.aggregate(
     {
       $match: {dia: ''+fecha}
     },
@@ -146,8 +147,45 @@ var obtener_carro_mas_consultado_especifico = function(fecha){
       $limit : 1
     },
     function(err,res){
-      console.log(res);
+
+      if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'carro_vendido.name': res[0]._id ,'carro_vendido.units': res[0].total_sells  }}, function(err,obj){
+            console.log(res[0]);
+        });
+      }
+
   })
+}
+
+var obtener_carro_mas_consultado_especifico = function(fecha){
+
+  if (fecha === 'hoy') {
+    fecha = obtenerFechaString()
+  }
+
+  Consultado.aggregate(
+    {
+      $match: {dia: ''+fecha}
+    },
+    { $group:
+      { _id: '$carro', total_calls: { $sum: 1 } }
+    },
+    {
+      $sort: {total_sells: -1}
+    },
+    {
+      $limit : 1
+    },
+    function(err,res){
+
+      if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'carro_consultado.name': res[0]._id ,'carro_consultado.units': res[0].total_calls  }}, function(err,obj){
+            console.log(res[0]);
+        });
+      }
+
+    }
+  )
 }
 
 

@@ -56,12 +56,13 @@ io.sockets.on('connection', function (socket) {
 
 				cliente.estado = 'noatendido';
 
-				cliente.save(function(err,obj){
+				cliente.save(function(err,clie){
 					if (err) {};
 
 					obj = {
 				  		estado : 4,
-				  		msg: 'No hay Vendedores disponibles pronto se pondran en contacto con usted'
+				  		msg: 'No hay Vendedores disponibles pronto se pondran en contacto con usted',
+              user: clie
 				  	}
 
 
@@ -80,10 +81,14 @@ io.sockets.on('connection', function (socket) {
 
 	/*When the customer is new the system*/
     socket.on('call_seller', function (data) {
-      console.log('-----call_seller------');
-      console.log(data);
+      //console.log('-----call_seller------');
+      //console.log(data);
 
     	func.siguienteTurno(io, socket, data);
+
+      /*Keep data for the dashboard*/
+      dashboard_f.obtener_carro_mas_consultado_especifico('hoy');
+
     });
 
 

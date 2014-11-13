@@ -379,7 +379,7 @@ var cambiarEstadoAtendido = function(data){
 
 	Vendedor.update({_id:data.vendedor_id}, { $set: { disponible: false}}, function(err,obj){
 			elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
-	})
+	});
 
 
 }

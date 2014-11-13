@@ -18,88 +18,159 @@
     <div class="datos_now" ng-controller="DatosNowCtrl">
       <div class="row" >
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h5 class="text-center mayusculas">Personas que han entrado hoy</h5>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Personas que han entrado hoy</h5>
           <hr class="bg-negro">
           <p class="dato_dashboard text-center">
-            100.000
+            {{data.in_total}}
           </p>
-
-          <table>
-            <thead>
-              <th>
-                <h6 class="fecha text-center bold">22 / NOV</h6>
-              </th>
-              <th>
-                <h6 class="fecha text-center bold">22 / NOV</h6>
-              </th>
-              <th>
-                <h6 class="fecha text-center bold">22 / NOV</h6>
-              </th>
-            </thead>
-            <tbody>
-              <th>
-                <h6 class="fecha text-center">100.000</h6>
-              </th>
-              <th>
-                <h6 class="fecha text-center">100.000</h6>
-              </th>
-              <th>
-                <h6 class="fecha text-center">100.000</h6>
-              </th>
-            </tbody>
-          </table>
+          <div class="data_pasada">
+            <div class="row border-botom">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">19 / NOV</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">20 / NOV</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">21 / NOV</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h5 class="text-center mayusculas">Personas que estan adentro</h5>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Personas que estan adentro</h5>
           <hr class="bg-negro">
           <p class="dato_dashboard text-center">
-            80.000
+            {{data.in}}
           </p>
+          <div class="data_pasada">
+            <div class="row border-botom">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">19 / NOV</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">20 / NOV</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">21 / NOV</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h6 class="text-center mayusculas">Veces que han llamado al vendedor</h6>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h6 class="text-center mayusculas titulo-dashboard">Veces que han llamado al vendedor</h6>
           <hr class="bg-negro">
           <p class="dato_dashboard text-center">
-            2.000
+            {{data.calls}}
           </p>
+          <div class="data_pasada">
+            <div class="row border-botom">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">19 / NOV</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">20 / NOV</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">21 / NOV</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <br>
       <br>
       <div class="row" >
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h5 class="text-center mayusculas">Ventas realizadas</h5>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Ventas realizadas</h5>
           <hr class="bg-negro">
           <p class="dato_dashboard text-center">
-            100.000
+            {{data.sells}}
           </p>
+          <div class="data_pasada">
+            <div class="row border-botom">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">19 / NOV</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">20 / NOV</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">21 / NOV</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column border-lados">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+              <div class="large-4 column">
+                <h6 class="fecha text-center bold">100.000</h6>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h5 class="text-center mayusculas">Concesionario mas ventas</h5>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Concesionario mas ventas</h5>
           <hr class="bg-negro">
           <p class="dato_dashboard_largo text-center mayusculas">
-            intercontinental de autos
+            {{data.consecionario.name}}
           </p>
           <hr class="bg-negro">
           <h5 class="text-center mayusculas">
-            10.000 unidades
+            {{data.consecionario.units}} unidades
           </h5>
         </div>
         <div class="large-4 column">
-          <h6 class="fecha text-center bold">22 / NOV</h6>
-          <h5 class="text-center mayusculas">Vendedor con mas ventas</h5>
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Vendedor con mas ventas</h5>
           <hr class="bg-negro">
           <p class="dato_dashboard_largo text-center mayusculas">
-            Leonel Rodriguez
+            {{data.seller.name}}
           </p>
           <hr class="bg-negro">
           <h5 class="text-center mayusculas">
-            2.000 unidades
+            {{data.seller.units}} unidades
           </h5>
         </div>
       </div>

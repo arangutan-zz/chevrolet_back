@@ -4,6 +4,7 @@ var router = express.Router();
 var Vendedor = require('../models/vendedor');
 var Concesionario = require('../models/concesionario');
 var Agenda = require('../models/agenda');
+var DatosAgenda = require('../models/datos_agenda');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -174,6 +175,21 @@ router.get('/', function(req, res) {
 	//console.log(vendedor_model);
 
 
+    /*------crear datos agenda--------*/
+    // var agenda = new DatosAgenda({
+    //   dia: '11-12-2014',
+    //   delta: '15',
+    //   hora_ini: '5',
+    //   min_ini: '00',
+    //   hora_fin: '6',
+    //   min_fin: '00',
+    //   cupos: 5
+    // }).save(function(err,obj){
+    //   if (err) return res.json(err);
+    //
+    // });
+
+
   	res.render('vendedor');
 });
 
@@ -333,13 +349,23 @@ router.get('/ver_agenda/:dia', function(req, res){
     function (err, model) {
       if (err) return res.json(err);
 
-      res.json(model);
+      DatosAgenda.findOne({dia:req.params.dia},function (err,datos) {
+        if (datos) {
+          res.json({datos_agenda:datos, ocupadas: model});
+        }else {
+          res.json({datos_agenda:[], ocupadas: model});
+        }
+      })
+
+
 
     }
   );
 
 
 });
+
+
 
 
 

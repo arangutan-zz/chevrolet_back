@@ -376,7 +376,12 @@ p{
 }
 
 .dato_dashboard{
+  height: 136px;
   font-size: 85px;
+}
+
+.titulo-dashboard{
+  height: 25px;
 }
 
 .dato_dashboard_largo{
@@ -396,4 +401,13 @@ p{
 .bg-negro{
   margin: 20px 0;
   border: solid 1px black;
+}
+
+.border-botom{
+  border-bottom: 1px solid black;
+}
+
+.border-lados{
+  border-right: 1px solid black;
+  border-left:  1px solid black;
 }

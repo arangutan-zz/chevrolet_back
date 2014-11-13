@@ -8,7 +8,23 @@ var DashBoardSchema   = new Schema({
 	out  :  {type: Number,  default:  0 },
 	hight_in : { type: Number, default: 0 },
 	total_sells : { type: Number, default: 0 },
-	calls : { type: Number, default: 0 }
+	calls : { type: Number, default: 0 },
+	concesionario_ventas : {
+    name: String,
+    units:  Number
+  },
+	vendedor_ventas : {
+		name: String,
+		units:  Number
+	},
+	carro_consultado : {
+		name: String,
+		units:  Number
+	},
+	carro_vendido : {
+		name: String,
+		units:  Number
+	},
 });
 
 
