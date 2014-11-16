@@ -1,12 +1,12 @@
 window.onload = function() {
- 
+
     //var messages = [];
-    var socket = io.connect('http://192.168.1.100:3001');
+    var socket = io.connect('http://192.168.1.106:3001');
     //var field = document.getElementById("field");
     //var sendButton = document.getElementById("send");
     //var content = document.getElementById("content");
     //var name = document.getElementById("name");
- 
+
     socket.on('notify_tv', function (data) {
 
         /*
@@ -14,20 +14,45 @@ window.onload = function() {
         */
 
 
-       
+
 
         console.log('Se llamo a un vendedor');
         console.log(data);
+        // var template = '<div class="item">'+
+        //     '<div class="logo_chevrolet">'+
+        //         '<h1 class="subtitle_apptv">CONCESIONARIO</h1>'+
+        //         '<h1 class="title_apptv concesionario">'+data.turno.name+'</h1>'+
+        //     '</div>'+
+        //     '<div class="logo_chevrolet text-right">'+
+        //         '<h1 class="subtitle_apptv">DESTINO</h1>'+
+        //         '<h1 class="title_apptv carro">'+data.car+'</h1>'+
+        //     '</div>'+
+        // '</div>';
+
         var template = '<div class="item">'+
-            '<div class="logo_chevrolet">'+
-                '<h1 class="subtitle_apptv">CONCESIONARIO</h1>'+
-                '<h1 class="title_apptv concesionario">'+data.turno.name+'</h1>'+
-            '</div>'+
-            '<div class="logo_chevrolet text-right">'+
-                '<h1 class="subtitle_apptv">DESTINO</h1>'+
-                '<h1 class="title_apptv carro">'+data.car+'</h1>'+
-            '</div>'+
-        '</div>';
+                          '<div class="logo_chevrolet" style="width:100%">'+
+                            '<div class="row">'+
+                              '<div class="columns large-7">'+
+                                '<h5>VENDEDOR:</h5>'+
+                                '<h3>MARIO VARGAS HIGUAÍN</h3>'+
+                              '</div>'+
+                              '<div class="columns large-5">'+
+                                '<h5>COMPRADOR:</h5>'+
+                                '<h3>'+data.user.name+'</h3>'+
+                              '</div>'+
+                            '</div>'+
+                            '<div class="row">'+
+                              '<div class="columns large-7">'+
+                                '<h5>CONCESIONARIO:</h5>'+
+                                '<h3>'+data.turno.name+'</h3>'+
+                              '</div>'+
+                              '<div class="columns large-5">'+
+                                '<h5>DESTINO:</h5>'+
+                                '<h3>'+data.car+'</h3>'+
+                              '</div>'+
+                            '</div>'+
+                          '</div>'+
+                        '</div>';
 
         $('.lista_peticiones').prepend(template);
 
@@ -51,7 +76,5 @@ window.onload = function() {
     // sendButton.onclick = function() {
     //     socket.emit('call_seller', { car: 'Camaro' });
     // };
-    
+
 }
-
-

@@ -5,7 +5,7 @@ var Dashboard = require('../models/dashboard');
 var Vendido = require('../models/carro_mas_vendido');
 var Consultado = require('../models/carro_mas_consultado');
 var Agenda = require('../models/agenda');
-
+var async =  require('async');
 
 
 var obtenerFechaString = function(){
@@ -43,9 +43,6 @@ var obtener_dashboard =  function(fecha){
     }
 
   });
-
-
-
 }
 
 
@@ -60,11 +57,11 @@ var calcular_vendedor_mas_ventas = function(fecha){
     if (vendedores) {
       console.log(vendedores);
 
-      if (res[0]) {
-        Dashboard.update({day:fecha}, { $set: { 'vendedor_ventas.name': res[0]._id ,'vendedor_ventas.units': res[0].total_sells  }}, function(err,obj){
-            console.log(res[0]);
+      //if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'vendedor_ventas.name': vendedores[0].name ,'vendedor_ventas.units': vendedores[0].num_ventas  }}, function(err,obj){
+            console.log(vendedores[0]);
         });
-      }
+      //}
 
     } else{
 
@@ -75,7 +72,13 @@ var calcular_vendedor_mas_ventas = function(fecha){
 var calcular_consecionario_mas_ventas = function(fecha){
   Vendedor.aggregate(
     { $group:
-      { _id: '$concesionario', total_sells: { $sum: "$num_ventas" } }
+      { _id: '$concesionario_name', total_sells: { $sum: "$num_ventas" } }
+    },
+    {
+      $sort: {total_sells: -1}
+    },
+    {
+      $limit : 1
     },
     function (err, res) {
       if (err) return handleError(err);
@@ -92,7 +95,7 @@ var calcular_consecionario_mas_ventas = function(fecha){
 
 
 
-var aumentar_vendidos = function(carro,id_user,id_vendidos){
+var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
 
   var fecha = obtenerFechaString();
 
@@ -104,24 +107,53 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos){
 
       dashboard.save(function(err,dashb){
         //no se pudo guardar
+
+        if (dashb) {
+          var consultado = new Vendido({
+            dia: fecha,
+            carro:  carro,
+            usuario: id_user,
+            vendedor: id_vendidos
+          }).save(function (err, obj) {
+            if (err) return console.error(err);
+              console.log(obj);
+
+              async.parallel({
+                one: function(callback){
+                    calcular_consecionario_mas_ventas(fecha);
+                    setTimeout(function(){
+                        callback(null, 'done');
+                    }, 1000);
+                },
+                two: function(callback){
+                    calcular_vendedor_mas_ventas(fecha);
+                    setTimeout(function(){
+                        callback(null, 'done');
+                    }, 1000);
+                },
+                tree: function(callback){
+                    obtener_carro_mas_vendido_especifico('hoy');
+                    setTimeout(function(){
+                        callback(null, 'done');
+                    }, 1000);
+                }
+            },
+            function(err, results) {
+              console.log(results);
+              actualizar_dashboard(io);
+                // results is now equals to: {one: 1, two: 2}
+
+            });
+
+          });
+        }
+
       });
 
     }else{
       //no se encontro para aumentar
     }
 
-  });
-
-
-
-  var consultado = new Vendido({
-    dia: fecha,
-    carro:  carro,
-    usuario: id_user,
-    vendedor: id_vendidos
-  }).save(function (err, obj) {
-    if (err) return console.error(err);
-      console.log(obj);
   });
 
 }
@@ -157,7 +189,7 @@ var obtener_carro_mas_vendido_especifico = function(fecha){
   })
 }
 
-var obtener_carro_mas_consultado_especifico = function(fecha){
+var obtener_carro_mas_consultado_especifico = function(fecha,callback){
 
   if (fecha === 'hoy') {
     fecha = obtenerFechaString()
@@ -171,7 +203,7 @@ var obtener_carro_mas_consultado_especifico = function(fecha){
       { _id: '$carro', total_calls: { $sum: 1 } }
     },
     {
-      $sort: {total_sells: -1}
+      $sort: {total_calls: -1}
     },
     {
       $limit : 1
@@ -181,6 +213,11 @@ var obtener_carro_mas_consultado_especifico = function(fecha){
       if (res[0]) {
         Dashboard.update({day:fecha}, { $set: { 'carro_consultado.name': res[0]._id ,'carro_consultado.units': res[0].total_calls  }}, function(err,obj){
             console.log(res[0]);
+
+            if (callback) {
+              callback();
+            }
+
         });
       }
 
@@ -189,22 +226,7 @@ var obtener_carro_mas_consultado_especifico = function(fecha){
 }
 
 
-var obtener_carro_mas_vendido = function(){
-  Vendido.aggregate(
-    { $group:
-      { _id: '$carro', total_sells: { $sum: 1 } }
-    },
-    {
-      $sort: {total_sells: -1}
-    },
-    function(err,res){
-      console.log(res);
-  })
-}
-
-
-
-var aumentar_llamadas = function(carro,id_user){
+var aumentar_llamadas = function(carro,id_user,callback){
 
   console.log('el carro consultado es '+carro);
 
@@ -219,6 +241,20 @@ var aumentar_llamadas = function(carro,id_user){
 
       dashboard.save(function(err,dashb){
         //no se pudo guardar
+        if (dashb) {
+          // if (callback) {
+          //   callback();
+          // }
+          var consultado = new Consultado({
+            dia: fecha,
+            carro:  carro,
+            id_user: id_user
+          }).save(function (err, obj) {
+            if (err) return console.error(err);
+              obtener_carro_mas_consultado_especifico('hoy',callback);
+          });
+
+        }
       });
 
     }else{
@@ -227,26 +263,25 @@ var aumentar_llamadas = function(carro,id_user){
 
   });
 
-  var consultado = new Consultado({
-    dia: fecha,
-    carro:  carro,
-    id_user: id_user
-  }).save(function (err, obj) {
-    if (err) return console.error(err);
-      console.log(obj);
+}
+
+var actualizar_dashboard = function (io) {
+  console.log('actualizar dashboard');
+
+  Dashboard.findOne({day : obtenerFechaString()}, function(err, dashboard){
+    if (err) {return console.log("error");};
+
+    if (dashboard){
+        //return dashboard;
+        io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard});
+    }
+
   });
 
 }
 
-var enviar_dashboard_llamar_vendedor = function (socket,io) {
-    console.log('llamo al dash');
-    console.log('--------------------------------------------');
-    io.sockets.emit('poner_otro', {llamo_vendedor: 'sumele uno'});
-    //socket.emit('',{llamo_vendedor: 'sumele uno'});
-}
 
-
-
+exports.actualizar_dashboard = actualizar_dashboard;
 exports.crear_dashboard = crear_dashboard;
 exports.obtenerFechaString = obtenerFechaString;
 exports.obtener_dashboard = obtener_dashboard;
@@ -255,6 +290,4 @@ exports.aumentar_vendidos = aumentar_vendidos;
 exports.calcular_consecionario_mas_ventas = calcular_consecionario_mas_ventas;
 exports.calcular_vendedor_mas_ventas = calcular_vendedor_mas_ventas;
 exports.obtener_carro_mas_vendido_especifico = obtener_carro_mas_vendido_especifico;
-exports.obtener_carro_mas_vendido = obtener_carro_mas_vendido;
 exports.obtener_carro_mas_consultado_especifico = obtener_carro_mas_consultado_especifico;
-exports.enviar_dashboard_llamar_vendedor = enviar_dashboard_llamar_vendedor;

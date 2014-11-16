@@ -4,7 +4,6 @@ var Schema       = mongoose.Schema;
 var AgendaSchema   = new Schema({
 	dia: String,
 	hora: String,
-	carro: String,
 	cliente: {type: mongoose.Schema.Types.ObjectId, ref: 'Cliente'},
 	concesionario: {type: mongoose.Schema.Types.ObjectId, ref: 'Concesionario'}
 });

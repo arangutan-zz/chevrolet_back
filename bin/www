@@ -4,6 +4,7 @@ var app = require('../app');
 var func = require('./funciones');
 var dashboard_f = require('./dashb_funciones.js');
 var Cliente = require('../models/cliente');
+var Dashboard = require('../models/dashboard');
 
 /*Init*/
 //dashboard_f.crear_dashboard();
@@ -70,9 +71,7 @@ io.sockets.on('connection', function (socket) {
 
 				});
 
-
 			}
-
 
 		});
 	});
@@ -141,7 +140,9 @@ io.sockets.on('connection', function (socket) {
 
 
     socket.on('carro_consulta', function(data){
-      dashboard_f.aumentar_llamadas(data.car,data.user._id);
+      dashboard_f.aumentar_llamadas(data.car,data.user._id,actualizar_dashboard);
+
+      //actualizar_dashboard();
     });
 
     socket.on('seller_acepted', function (data) {
@@ -164,10 +165,10 @@ io.sockets.on('connection', function (socket) {
 
     /*Tombola*/
 
-
     socket.on('aprobar_compra',function (data){
     	//console.log(data);
-    	func.cambiarEstadoCompra(data,socket);
+      //console.log(io);
+    	func.cambiarEstadoCompra(data,socket,io);
     });
 
 
@@ -223,16 +224,25 @@ io.sockets.on('connection', function (socket) {
     socket.on('vendedor_noatendio',function(data){
       console.log('no atendio');
       func.vendedorUltimoCola(data);
-    })
+    });
+
+
+    var actualizar_dashboard = function () {
+      Dashboard.findOne({day : dashboard_f.obtenerFechaString()}, function(err, dashboard){
+        if (err) {return console.log("error");};
+
+        if (dashboard){
+            //return dashboard;
+            io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard});
+        }
+
+      });
+    }
 
 });
 
 
-
-
-
-module.exports = io;
-
+exports.io = io;
 
 // app.set('port', process.env.PORT || 3003);
 

@@ -176,7 +176,7 @@ var buscarVendedorDni = function(dni){
 
 
 
-var cambiarEstadoCompraNew = function(data,socket){
+var cambiarEstadoCompraNew = function(data,socket,io){
 
 	var cliente = new Cliente({
 		name: data.name_user,
@@ -187,13 +187,15 @@ var cambiarEstadoCompraNew = function(data,socket){
 		estado : 'comprador'
 	});
 
-
 		/*Search the seller*/
 
 	Vendedor.findOne({cedula : data.dni_seller},function (err,vendedor){
+
+
 		if (err) return handleError(err);
 
 		if (vendedor) {
+
 
 			vendedor.ventas.push({
 				day: obtenerFechaString(),
@@ -210,9 +212,11 @@ var cambiarEstadoCompraNew = function(data,socket){
 					return console.log(err);
 				}
 				vendedor.save(function(err, vendedor_s){
-					socket.emit('mensaje_compra',{cod: 1, msg: 'Muchas Gracias por su compra'});
+					if (vendedor_s) {
+							socket.emit('mensaje_compra',{cod: 1, msg: 'Muchas Gracias por su compra'});
+							dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id,io);
+					}
 
-					dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id);
 				});
 
 			});
@@ -228,7 +232,7 @@ var cambiarEstadoCompraNew = function(data,socket){
 }
 
 
-var cambiarEstadoCompra = function(data,socket){
+var cambiarEstadoCompra = function(data,socket,io){
 
 
 	Cliente.findOne({ dni: data.dni_user },function (err, cliente) {
@@ -265,7 +269,7 @@ var cambiarEstadoCompra = function(data,socket){
 
 							socket.emit('mensaje_compra',{cod: 1, msg: 'Muchas Gracias por su compra'});
 
-							dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id);
+							dashboard_f.aumentar_vendidos(data.car,cliente._id,vendedor_s._id,io);
 
 						});
 

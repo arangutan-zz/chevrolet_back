@@ -10,6 +10,7 @@ var routes = require('./routes/index');
 var vendedor = require('./routes/vendedor');
 var apptv = require('./routes/apptv');
 var dashboard = require('./routes/dashboard');
+var concesionario = require('./routes/concesionario');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/', routes);
 app.use('/apptv', apptv);
 app.use('/vendedor', vendedor);
 app.use('/dashboard', dashboard);
+app.use('/concesionario',concesionario);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

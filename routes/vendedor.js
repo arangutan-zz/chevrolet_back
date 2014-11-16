@@ -4,7 +4,10 @@ var router = express.Router();
 var Vendedor = require('../models/vendedor');
 var Concesionario = require('../models/concesionario');
 var Agenda = require('../models/agenda');
+var Agenda = require('../models/agenda');
 var DatosAgenda = require('../models/datos_agenda');
+
+var io = require('../bin/www');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -317,8 +320,8 @@ router.get('/:concesionario/desocupar/:carro', function(req, res) {
 	});
 });
 
-
-router.get('/agendar/:dia/:hora/:id_cliente', function(req, res){
+/*Agregar carro*/
+router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
   console.log(req.params.dia);
   console.log(req.params.hora);
   console.log(req.params.id_cliente);
@@ -326,7 +329,8 @@ router.get('/agendar/:dia/:hora/:id_cliente', function(req, res){
   var agenda = new Agenda({
   	dia: req.params.dia,
   	hora: req.params.hora,
-  	cliente : req.params.id_cliente
+  	cliente : req.params.id_cliente,
+    carro : req.params.carro
   }).save(function(err,obj){
   	if (err) return res.json(err);
 
@@ -336,10 +340,32 @@ router.get('/agendar/:dia/:hora/:id_cliente', function(req, res){
 
 });
 
+router.get('/agenda_concesionario/:dia',function (req,res) {
+
+
+
+
+  Agenda.find({dia:''+req.params.dia})
+         .populate('cliente')
+         .populate('concesionario')
+         .exec (function (err, model) {
+          if (err) return handleError(err);
+
+          if (model) {
+            res.json({agenda: model});
+            //console.log(model);
+          }else{
+            //res.render('vendedor', { title: 'No existe este concesionario' });
+          }
+  });
+});
+
 
 router.get('/ver_agenda/:dia', function(req, res){
   console.log(req.params.dia);
+  //console.log(io.io);
 
+  //io.io.sockets.emit('notify_concesionario',obj);
 
   Agenda.aggregate(
     {$match : {dia: ''+req.params.dia}},
@@ -357,17 +383,18 @@ router.get('/ver_agenda/:dia', function(req, res){
         }
       })
 
-
-
     }
   );
 
 
+  //Agenda.update({_id:'5464bf6b786965c3c16bde79'}, { $set: { concesionario: '5464224c644e3d877f41cb7c'}}, function(err,obj){
+
+  //});
+
+
+
+
 });
-
-
-
-
 
 
 module.exports = router;

@@ -11,25 +11,92 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 	/*Variables*/
 	$scope.data = {
 		date: '12 NOV',
-		in : 100000,
-		in_total : 100000,
-		calls : 100000,
-		sells: 100000,
+		in : 0,
+		in_total : 0,
+		calls : 0,
+		sells: 0,
 		consecionario:{
-			name: 'Internacional',
-			units: 100000
+			name: '--',
+			units: 0
 		},
 		seller:{
-			name: 'Ibra Ramirez',
-			units: 100000
+			name: '--',
+			units: 0
+		},
+		car_sell:{
+			name: '--',
+			units: 0
+		},
+		car_call:{
+			name: '--',
+			units: 0
 		}
 	}
+
+
+	socket.on('actualizacion_dashboard', function (data) {
+		console.log(data);
+
+		/*
+
+		*/
+
+		$scope.data = {
+			in : data.dashboard.enter - data.dashboard.out,
+			in_total : data.dashboard.enter,
+			calls : data.dashboard.calls,
+			sells: data.dashboard.total_sells,
+			consecionario:{
+				name: data.dashboard.concesionario_ventas.name,
+				units: data.dashboard.concesionario_ventas.units
+			},
+			seller:{
+				name: data.dashboard.vendedor_ventas.name,
+				units: data.dashboard.vendedor_ventas.units
+			},
+			car_sell:{
+				name: data.dashboard.carro_vendido.name,
+				units: data.dashboard.carro_vendido.units
+			},
+			car_call:{
+				name: data.dashboard.carro_consultado.name,
+				units: data.dashboard.carro_consultado.units
+			}
+		}
+
+		$scope.$digest();
+
+	});
 
 
 	/*Init*/
 	$http.get('/dashboard/datos_now').
 		success(function(data, status, headers, config) {
 			console.log(data);
+
+			$scope.data = {
+				in : data.enter - data.out,
+				in_total : data.out,
+				calls : data.calls,
+				sells: data.total_sells,
+				consecionario:{
+					name: data.concesionario_ventas.name,
+					units: data.concesionario_ventas.units
+				},
+				seller:{
+					name: data.vendedor_ventas.name,
+					units: data.vendedor_ventas.units
+				},
+				car_sell:{
+					name: data.carro_vendido.name,
+					units: data.carro_vendido.units
+				},
+				car_call:{
+					name: data.carro_consultado.name,
+					units: data.carro_consultado.units
+				}
+			}
+
 		  // this callback will be called asynchronously
 		  // when the response is available
 		}).

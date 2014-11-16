@@ -22,7 +22,6 @@ a {
 
 
 .body_tombola{
-	height: 100%;
 	/*background: #383839;*/
 
 	background: #2c2c2e; /* Old browsers */
@@ -33,12 +32,12 @@ a {
 	background: -ms-linear-gradient(top,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* IE10+ */
 	background: linear-gradient(to bottom,  #2c2c2e 0%,#97999d 73%,#28343b 99%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c2c2e', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
-
 }
 
 
 h1, h2, h3, h4 ,h5, h6 {
-  font-family: 'chevroletFont';
+  font-family: 'chevroletFont' !important;
+  color: rgb(73, 77, 80);
 }
 
 .text-center{
@@ -50,7 +49,7 @@ h1, h2, h3, h4 ,h5, h6 {
 }
 
 .espacio_titulo{
-	margin: 20px 0 0 0 ;
+	margin: 20px 0 0 0;
 }
 
 .title_app{
@@ -199,7 +198,7 @@ header{
 
 .item{
 	width: 1280px;
-	height: 150px;
+	height: 180px;
 	padding: 20px;
 	margin: 20px 0 0 0;
 	background: #e1b334; /* Old browsers */
@@ -210,9 +209,25 @@ header{
 	background: -ms-linear-gradient(top,  #e1b334 0%,#eea420 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #e1b334 0%,#eea420 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1b334', endColorstr='#eea420',GradientType=0 ); /* IE6-9 */
+  background: url("../images/barra-app-tv.jpg");
+  background-size: cover;
+
+}
+.item *{
+  text-transform: uppercase;
 
 }
 
+.item h3 {
+  font-weight: bolder;
+}
+
+
+.item .logo_chevrolet{
+
+
+
+}
 .subtitle_apptv{
 	font-weight: 300px;
 	font-size: 40px;
@@ -410,4 +425,21 @@ p{
 .border-lados{
   border-right: 1px solid black;
   border-left:  1px solid black;
+}
+
+
+/*----------Concesionarios-----------*/
+
+#id_conce{
+  font-size:1px;
+}
+
+.header_concesionario{
+  width: 100%;
+  padding: 0 0 10px 0;
+  background: white;
+}
+
+.amarillo{
+  color: #E0B334;
 }

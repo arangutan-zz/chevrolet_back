@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
 
 /* GET home page. */
-router.get('/data_now', function(req, res) {
+router.get('/datos_now', function(req, res) {
 
   //dashboard_f.crear_dashboard();
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/underscore.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+    <script type="text/javascript" src="/javascripts/foundation.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/foundation.min.css' />
+    <link rel='stylesheet' href='/stylesheets/foundation.css' />
+    <script type="text/javascript" src="/javascripts/app_concesionario.js"></script>
+    <script type="text/javascript" src="/javascripts/timers.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+  <body ng-app="Concesionarios">
+    <div class="header_concesionario">
+      <div class="row">
+        <div class="large-4 column">
+          <img src="/images/Chevrolet.png" alt="" />
+        </div>
+        <div class="large-4 column">
+
+        </div>
+        <div class="large-4 column text-right">
+           <br>
+          <img src="/images/findnewroads.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="large-12 column">
+        <h3>
+          CITAS <span class="amarillo">AGENDADAS</span>
+        </h3>
+        <h3>
+          16/11/2014
+        </h3>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" ng-controller="AgendaConcesionarioCtr">
+      <div class="lista_solicitud" ng-repeat="agenda in agendas">
+        <div class="large-1 column">
+          <h5 class="amarillo">{{agenda.hora}} -</h5>
+        </div>
+        <div class="large-6 column">
+          <h5>{{agenda.cliente.name}}</h5>
+        </div>
+        <div class="large-3 column">
+          <h5>{{agenda.cliente.carro}}</h5>
+        </div>
+        <div class="large-2 column" ng-click="solicitar_hora(agenda)">
+          <validar-ocupado></validar-ocupado>
+        </div>
+        <hr>
+      </div>
+      <h1 id="id_conce"><%= id_consecionario %></h1>
+    </div>
+  </body>
+</html>
