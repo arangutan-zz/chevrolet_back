@@ -336,7 +336,7 @@ router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
 
   	if (obj) {
 
-  		Agenda.find({dia:obj.fecha})
+  		Agenda.find({dia:obj.dia})
 			        .populate('cliente')
 			        .populate('concesionario')
 			        .exec (function (err, model) {
