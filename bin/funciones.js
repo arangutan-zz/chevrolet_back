@@ -33,10 +33,20 @@ var siguienteTurno = function(io, socket, data){
 			    		c_atendiendo.save(function(err,c_aten){
 			    			c_primer.save(function(err,c_primer){
 
-									eliminarPrimerVendedorCola(c_primer._id);
+								if (c_primer.cola_vendedores.length > 0) {
+									
+									Vendedor.findOne({_id : c_primer.cola_vendedores[0]},function (err,vendedor) {
+										if (vendedor) {
+					    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+			    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:vendedor});
+			    							eliminarPrimerVendedorCola(c_primer._id);
+										};
+									})
+								}else{
+									console.log('no tiene vendedores en cola');
+								}
 
-			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
-			    				io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+
 
 			    				//return c_primer;
 			    			});
@@ -53,11 +63,22 @@ var siguienteTurno = function(io, socket, data){
 			    		c_atendiendo.save(function(err,c_aten){
 			    			c_siguiente.save(function(err,c_siguiente){
 
-									eliminarPrimerVendedorCola(c_siguiente._id);
+								//return c_siguiente;
 
-			    				io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
-			    				io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
-			    				//return c_siguiente;
+			    				if (c_siguiente.cola_vendedores.length > 0) {
+									
+									Vendedor.findOne({_id : c_siguiente.cola_vendedores[0]},function (err,vendedor) {
+										if (vendedor) {
+					    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+			    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:vendedor});
+			    							eliminarPrimerVendedorCola(c_siguiente._id);
+										};
+									})
+								}else{
+									console.log('no tiene vendedores en cola');
+								}
+
+
 			    			});
 			    		});
 			    	});

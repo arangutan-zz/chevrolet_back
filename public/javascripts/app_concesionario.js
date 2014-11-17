@@ -14,7 +14,6 @@ app.filter('validad_concecionario',function () {
 app.directive('validarOcupado', function($compile) {
 
 
-
   var btn = '<div class="button">Aceptar cita</div>';
   var concesionario = '<p class="text-center">Cita ya aceptada por {{content.concesionario.name}}</p>';
 
