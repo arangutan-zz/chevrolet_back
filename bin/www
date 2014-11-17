@@ -227,6 +227,14 @@ io.sockets.on('connection', function (socket) {
     });
 
 
+    /*Concesionario*/
+
+    socket.on('seleccionar_hora_atender',function(data){
+      console.log('');
+      func.seleccionar_hora(data,io);
+    });
+
+
     var actualizar_dashboard = function () {
       Dashboard.findOne({day : dashboard_f.obtenerFechaString()}, function(err, dashboard){
         if (err) {return console.log("error");};

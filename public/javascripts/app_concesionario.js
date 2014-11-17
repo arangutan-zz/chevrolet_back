@@ -65,7 +65,14 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
     $scope.solicitar_hora =  function (item_agenda) {
       if (item_agenda.concesionario == null) {
         //console.log($scope.id_consecionario);
-        console.log(angular.element('#id_conce').html());
+
+        var obj = {
+          id_agenda : item_agenda._id,
+          id_concecionario : angular.element('#id_conce').html().trim()
+        }
+
+        socket.emit('seleccionar_hora_atender',obj);
+
       }else {
         alert('esta hora ya fue asignada');
       }

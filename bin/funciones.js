@@ -2,6 +2,7 @@ var Cliente = require('../models/cliente');
 var Vendedor = require('../models/vendedor');
 var Concesionario = require('../models/concesionario');
 var Dashboard = require('../models/dashboard');
+var Agenda = require('../models/agenda');
 var dashboard_f = require('./dashb_funciones.js');
 
 var obtenerFechaString = function(){
@@ -574,6 +575,38 @@ var desocuparVendedor =  function(data){
 }
 
 
+/*Concesionario*/
+
+var seleccionar_hora =  function (data,io) {
+	Agenda.findOne({_id: data.id_agenda},function (err,agenda) {
+		if (agenda) {
+			if (agenda.concesionario != null) {
+				agenda.concesionario = data.id_concecionario;
+
+				agenda.save(function (err,agenda_s) {
+					if (agenda_s) {
+						Agenda.find({},function (err,agendas) {
+							if (agendas) {
+								io.sockets.emit('notify_concesionario',agendas);
+							};
+						});
+					}
+				})
+
+			}else{
+
+				Agenda.find({},function (err,agendas) {
+					if (agendas) {
+						io.sockets.emit('notify_concesionario',agendas);
+					};
+				});
+
+			}
+		};
+	})
+}
+
+
 exports.siguienteTurno = siguienteTurno;
 //exports.siguienteTurnoSinTv = siguienteTurnoSinTv;
 //exports.cancelarTurno = cancelarTurno;
@@ -588,3 +621,6 @@ exports.buscarConsecionario = buscarConsecionario;
 exports.desocuparVendedor = desocuparVendedor;
 exports.elmininarVendedorCola = elmininarVendedorCola;
 exports.vendedorUltimoCola = vendedorUltimoCola;
+exports.seleccionar_hora = seleccionar_hora;
+
+
