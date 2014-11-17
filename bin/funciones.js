@@ -583,19 +583,26 @@ var seleccionar_hora =  function (data,io) {
 			if (agenda.concesionario == null) {
 				agenda.concesionario = data.id_concecionario;
 
-				Agenda.find({dia:data.fecha})
-			        .populate('cliente')
-			        .populate('concesionario')
-			        .exec (function (err, model) {
-			        	if (err) return handleError(err);
 
-			        		if (model) {
-			            		io.sockets.emit('notify_concesionario',model);
-			            		//console.log(model);
-			          		}else{
-			            		//res.render('vendedor', { title: 'No existe este concesionario' });
-			          		}
-			  			});
+				agenda.save(function (err,agenda) {
+					if (agenda) {
+						Agenda.find({dia:data.fecha})
+					        .populate('cliente')
+					        .populate('concesionario')
+					        .exec (function (err, model) {
+					        	if (err) return handleError(err);
+
+					        		if (model) {
+					            		io.sockets.emit('notify_concesionario',model);
+					            		//console.log(model);
+					          		}else{
+					            		//res.render('vendedor', { title: 'No existe este concesionario' });
+					          		}
+					  			});
+								
+					};
+				})
+				
 
 			}else{
 
