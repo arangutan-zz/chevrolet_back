@@ -43,18 +43,19 @@ router.get('/init', function(req,res){
 
 router.get('/estado_llamar_vendedor', function(req,res){
 
-  // var obj = new LlamarVendedor({
-  //   activo: true
-  // }).save(function(err,model) {
-  //
-  // });
+  var obj = new LlamarVendedor({
+    activo: true
+  }).save(function(err,model) {
+  
+  });
 
+  //res.json({activo:true});
+ // LlamarVendedor.find({},function (err,model) {
 
-  LlamarVendedor.find({},function (err,model) {
-    if (model) {
-      res.json(model[0]);
-    }
-  })
+ //   if (model) {
+ //     res.json(model[0]);
+ //   }
+ // })
 
   //dashboard_f.crear_dashboard();
 
