@@ -343,7 +343,7 @@ router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
 			        	if (err) return handleError(err);
 
 			        		if (model) {
-			            		io.sockets.emit('notify_concesionario',model);
+			            		io.io.sockets.emit('notify_concesionario',model);
 			            		//console.log(model);
 			          		}else{
 			            		//res.render('vendedor', { title: 'No existe este concesionario' });
