@@ -63,7 +63,7 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
 
     /*Events*/
     $scope.solicitar_hora =  function (item_agenda) {
-      if (item_agenda.concesionario == null && item_agenda.cliente == null) {
+      if (item_agenda.concesionario == null) {
         //console.log($scope.id_consecionario);
         console.log(angular.element('#id_conce').html());
       }else {
