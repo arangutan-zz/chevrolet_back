@@ -20,8 +20,7 @@ app.directive('validarOcupado', function($compile) {
 
   var linker = function(scope, element, attrs) {
 
-    console.log(scope.content.concecionario);
-    if (scope.content.concecionario != null) {
+    if (scope.content.concesionario != null) {
       element.html(concesionario).show();
       $compile(element.contents())(scope);
     }else{
