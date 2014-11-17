@@ -230,7 +230,6 @@ io.sockets.on('connection', function (socket) {
     /*Concesionario*/
 
     socket.on('seleccionar_hora_atender',function(data){
-      console.log('');
       func.seleccionar_hora(data,io);
     });
 

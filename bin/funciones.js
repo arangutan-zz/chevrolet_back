@@ -585,20 +585,38 @@ var seleccionar_hora =  function (data,io) {
 
 				agenda.save(function (err,agenda_s) {
 					if (agenda_s) {
-						Agenda.find({},function (err,agendas) {
-							if (agendas) {
-								io.sockets.emit('notify_concesionario',agendas);
-							};
+						Agenda.find({dia:data.fecha})
+						         .populate('cliente')
+						         .populate('concesionario')
+						         .exec (function (err, model) {
+						          if (err) return handleError(err);
+
+						          if (model) {
+						            res.json({agenda: model});
+						            //console.log(model);
+						          }else{
+						            //res.render('vendedor', { title: 'No existe este concesionario' });
+						          }
+						  });
 						});
 					}
 				})
 
 			}else{
 
-				Agenda.find({},function (err,agendas) {
-					if (agendas) {
-						io.sockets.emit('notify_concesionario',agendas);
-					};
+				Agenda.find({dia:data.fecha})
+				         .populate('cliente')
+				         .populate('concesionario')
+				         .exec (function (err, model) {
+				          if (err) return handleError(err);
+
+				          if (model) {
+				            res.json({agenda: model});
+				            //console.log(model);
+				          }else{
+				            //res.render('vendedor', { title: 'No existe este concesionario' });
+				          }
+				  });
 				});
 
 			}

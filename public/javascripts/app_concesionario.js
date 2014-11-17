@@ -21,7 +21,8 @@ app.directive('validarOcupado', function($compile) {
 
   var linker = function(scope, element, attrs) {
 
-    console.log(scope.content.concesionario);
+
+    console.log(scope.content);
 
     if (scope.content.concesionario != null) {
       element.html(concesionario).show();
@@ -47,8 +48,10 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
     $scope.agendas = [];
     $scope.id_consecionario = '';
 
+    $scope.fecha = '11-17-2014';
+
     /*Init*/
-    $http.get('/vendedor/agenda_concesionario/11-17-2014').
+    $http.get('/vendedor/agenda_concesionario/'+$scope.fecha).
       success(function(data, status, headers, config) {
         //console.log(data);
         $scope.agendas = data.agenda;
@@ -68,7 +71,8 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
 
         var obj = {
           id_agenda : item_agenda._id,
-          id_concecionario : angular.element('#id_conce').html().trim()
+          id_concecionario : angular.element('#id_conce').html().trim(),
+          fecha : $scope.fecha
         }
 
         socket.emit('seleccionar_hora_atender',obj);
