@@ -43,7 +43,7 @@ var siguienteTurno = function(io, socket, data){
 										};
 									})
 								}else{
-									console.log('no tiene vendedores en cola');
+									console.log(c_primer.name+': no tiene vendedores en cola');
 								}
 
 
@@ -75,7 +75,7 @@ var siguienteTurno = function(io, socket, data){
 										};
 									})
 								}else{
-									console.log('no tiene vendedores en cola');
+									console.log(c_siguiente.name+': no tiene vendedores en cola');
 								}
 
 

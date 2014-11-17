@@ -47,20 +47,20 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 			calls : data.dashboard.calls,
 			sells: data.dashboard.total_sells,
 			consecionario:{
-				name: data.dashboard.concesionario_ventas.name,
-				units: data.dashboard.concesionario_ventas.units
+				name: data.dashboard.concesionario_ventas ? data.dashboard.concesionario_ventas.name : '--',
+				units: data.dashboard.concesionario_ventas ? data.dashboard.concesionario_ventas.units : '--'
 			},
 			seller:{
-				name: data.dashboard.vendedor_ventas.name,
-				units: data.dashboard.vendedor_ventas.units
+				name: data.dashboard.vendedor_ventas ? data.dashboard.vendedor_ventas.name : '--',
+				units: data.dashboard.vendedor_ventas ? data.dashboard.vendedor_ventas.units :'--'
 			},
 			car_sell:{
-				name: data.dashboard.carro_vendido.name,
-				units: data.dashboard.carro_vendido.units
+				name: data.dashboard.carro_vendido ? data.dashboard.carro_vendido.name : '--',
+				units: data.dashboard.carro_vendido ? data.dashboard.carro_vendido.units : '--'
 			},
 			car_call:{
-				name: data.dashboard.carro_consultado.name,
-				units: data.dashboard.carro_consultado.units
+				name: data.dashboard.carro_consultado ? data.dashboard.carro_consultado.name : '--',
+				units: data.dashboard.carro_consultado ? data.dashboard.carro_consultado.units : '--'
 			}
 		}
 
@@ -80,20 +80,20 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 				calls : data.calls,
 				sells: data.total_sells,
 				consecionario:{
-					name: data.concesionario_ventas.name,
-					units: data.concesionario_ventas.units
+					name: data.concesionario_ventas ? data.concesionario_ventas.name : '--',
+					units: data.concesionario_ventas ? data.concesionario_ventas.units : '--'
 				},
 				seller:{
-					name: data.vendedor_ventas.name,
-					units: data.vendedor_ventas.units
+					name: data.vendedor_ventas ? data.vendedor_ventas.name : '--',
+					units: data.vendedor_ventas ? data.vendedor_ventas.units : '--'
 				},
 				car_sell:{
-					name: data.carro_vendido.name,
-					units: data.carro_vendido.units
+					name: data.carro_vendido ? data.vendedor_ventas.name : '--',
+					units: data.carro_vendido ? data.carro_vendido.units : '--'
 				},
 				car_call:{
-					name: data.carro_consultado.name,
-					units: data.carro_consultado.units
+					name: data.carro_consultado ? data.carro_consultado.name : '--',
+					units: data.carro_consultado ? data.carro_consultado.units : '--' 
 				}
 			}
 
