@@ -11,7 +11,7 @@ app.filter('validad_concecionario',function () {
   }
 });
 
-app.directive('validarOcupado', function() {
+app.directive('validarOcupado', function($compile) {
 
   var imageTemplate = '<div class="entry-photo"><h2>&nbsp;</h2><div class="entry-img"><span><a href="{{rootDirectory}}{{content.data}}"><img ng-src="{{rootDirectory}}{{content.data}}" alt="entry photo"></a></span></div><div class="entry-text"><div class="entry-title">{{content.title}}</div><div class="entry-copy">{{content.description}}</div></div></div>';
   var btn = '<div class="button">Aceptar hora</div>';
