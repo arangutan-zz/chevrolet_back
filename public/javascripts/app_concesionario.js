@@ -1,7 +1,7 @@
 var app = angular.module('Concesionarios', []);
 
 app.factory('socket',function(){
-  var socket = io.connect('http://192.168.1.106:3001');
+  var socket = io.connect('http://10.102.0.15:3001');
   return socket;
 });
 
@@ -29,7 +29,7 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
     $scope.id_consecionario = '';
 
     /*Init*/
-    $http.get('/vendedor/agenda_concesionario/11-16-2014').
+    $http.get('/vendedor/agenda_concesionario/11-17-2014').
       success(function(data, status, headers, config) {
         //console.log(data);
         $scope.agendas = data.agenda;

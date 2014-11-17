@@ -1,6 +1,6 @@
 $(function(){
 
-    var socket = io.connect('http://192.168.1.106:3001');
+    var socket = io.connect('http://10.102.0.15:3001');
 
     $('#send').on('click',function(){
 
