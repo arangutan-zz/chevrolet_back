@@ -13,9 +13,8 @@ app.filter('validad_concecionario',function () {
 
 app.directive('validarOcupado', function($compile) {
 
-  var imageTemplate = '<div class="entry-photo"><h2>&nbsp;</h2><div class="entry-img"><span><a href="{{rootDirectory}}{{content.data}}"><img ng-src="{{rootDirectory}}{{content.data}}" alt="entry photo"></a></span></div><div class="entry-text"><div class="entry-title">{{content.title}}</div><div class="entry-copy">{{content.description}}</div></div></div>';
   var btn = '<div class="button">Aceptar hora</div>';
-  var concesionario = '<p>Cita aceptada por {{content.concesionario.name}}</p>';
+  var concesionario = '<p class="text-center amarillo">Cita aceptada por {{content.concesionario.name}}</p>';
 
 
   var linker = function(scope, element, attrs) {
@@ -26,10 +25,7 @@ app.directive('validarOcupado', function($compile) {
     }else{
       element.html(btn).show();
     }
-      //console.log(scope.content.concecionario);
-      //console.log(element);
-      //element.html(getTemplate(scope.content.content_type)).show();
-      //$compile(element.contents())(scope);
+
   }
 
   return {
@@ -82,5 +78,9 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
     socket.on('notify_concesionario', function (data) {
         console.log('Se creo una hora');
         console.log(data);
+        $scope.agendas = data;
+
+        $scope.$digest();
+
     });
 }]);
