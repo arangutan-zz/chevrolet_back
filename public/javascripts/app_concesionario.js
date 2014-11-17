@@ -12,14 +12,24 @@ app.filter('validad_concecionario',function () {
 });
 
 app.directive('validarOcupado', function() {
-  var //template = '<div class="button">Aceptar Cita</div>'
-  //if (agenda.concesionario != null) {
-    template = '<h5>Nombre: {{agenda.concesionario.name}}</h5>';
-  //}
+
+  var imageTemplate = '<div class="entry-photo"><h2>&nbsp;</h2><div class="entry-img"><span><a href="{{rootDirectory}}{{content.data}}"><img ng-src="{{rootDirectory}}{{content.data}}" alt="entry photo"></a></span></div><div class="entry-text"><div class="entry-title">{{content.title}}</div><div class="entry-copy">{{content.description}}</div></div></div>';
+  
+  var linker = function(scope, element, attrs) {
+
+      console.log(scope);
+      console.log(element);
+      // element.html(getTemplate(scope.content.content_type)).show();
+      // $compile(element.contents())(scope);
+  }
+
   return {
     restrict: 'E',
-    template: template
-  };
+    link: linker,
+        scope: {
+            content:'='
+        }
+    };
 });
 
 
