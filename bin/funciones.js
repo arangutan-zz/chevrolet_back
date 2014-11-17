@@ -580,7 +580,7 @@ var desocuparVendedor =  function(data){
 var seleccionar_hora =  function (data,io) {
 	Agenda.findOne({_id: data.id_agenda},function (err,agenda) {
 		if (agenda) {
-			if (agenda.concesionario != null) {
+			if (agenda.concesionario == null) {
 				agenda.concesionario = data.id_concecionario;
 
 				agenda.save(function (err,agenda_s) {
