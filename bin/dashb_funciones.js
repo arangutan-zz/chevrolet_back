@@ -7,6 +7,8 @@ var Consultado = require('../models/carro_mas_consultado');
 var Agenda = require('../models/agenda');
 var async =  require('async');
 
+var io = require('../bin/www');
+
 
 var obtenerFechaString = function(){
   var d = new Date();
@@ -154,6 +156,16 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
       //no se encontro para aumentar
     }
 
+  });
+
+}
+
+
+var guardar_in_out = function (enter,out) {
+  // body...
+
+  Dashboard.update({day:obtenerFechaString()}, { $set: { 'enter': enter ,'out': out  }}, function(err,obj){
+      actualizar_dashboard(io.io);
   });
 
 }
