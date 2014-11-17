@@ -13,13 +13,15 @@ app.filter('validad_concecionario',function () {
 
 app.directive('validarOcupado', function($compile) {
 
-  console.log(scope.content.concesionario);
+
 
   var btn = '<div class="button">Aceptar cita</div>';
   var concesionario = '<p class="text-center">Cita ya aceptada por {{content.concesionario.name}}</p>';
 
 
   var linker = function(scope, element, attrs) {
+
+    console.log(scope.content.concesionario);
 
     if (scope.content.concesionario != null) {
       element.html(concesionario).show();
