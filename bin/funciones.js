@@ -598,26 +598,24 @@ var seleccionar_hora =  function (data,io) {
 						            //res.render('vendedor', { title: 'No existe este concesionario' });
 						          }
 						  });
-						});
 					}
 				})
 
 			}else{
 
 				Agenda.find({dia:data.fecha})
-				         .populate('cliente')
-				         .populate('concesionario')
-				         .exec (function (err, model) {
-				          if (err) return handleError(err);
+			         .populate('cliente')
+			         .populate('concesionario')
+			         .exec (function (err, model) {
+			          if (err) return handleError(err);
 
-				          if (model) {
-				            res.json({agenda: model});
-				            //console.log(model);
-				          }else{
-				            //res.render('vendedor', { title: 'No existe este concesionario' });
-				          }
-				  });
-				});
+			          if (model) {
+			            res.json({agenda: model});
+			            //console.log(model);
+			          }else{
+			            //res.render('vendedor', { title: 'No existe este concesionario' });
+			          }
+			  	});
 
 			}
 		};
