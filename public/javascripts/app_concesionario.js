@@ -80,7 +80,6 @@ app.controller('AgendaConcesionarioCtr', ['$scope','socket','$http', function($s
 
     /*Functions*/
     socket.on('notify_concesionario', function (data) {
-        console.log('Se creo una hora');
         console.log(data);
         $scope.agendas = data;
 

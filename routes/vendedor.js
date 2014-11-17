@@ -334,6 +334,26 @@ router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
   }).save(function(err,obj){
   	if (err) return res.json(err);
 
+  	if (obj) {
+
+  		Agenda.find({dia:obj.fecha})
+			        .populate('cliente')
+			        .populate('concesionario')
+			        .exec (function (err, model) {
+			        	if (err) return handleError(err);
+
+			        		if (model) {
+			            		io.sockets.emit('notify_concesionario',model);
+			            		//console.log(model);
+			          		}else{
+			            		//res.render('vendedor', { title: 'No existe este concesionario' });
+			          		}
+			  			});
+
+  		
+  	};
+
+
     res.json({message:'se guardo correctamente'});
 
   });
@@ -343,8 +363,6 @@ router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
 router.get('/agenda_concesionario/:dia',function (req,res) {
 
 
-
-
   Agenda.find({dia:''+req.params.dia})
          .populate('cliente')
          .populate('concesionario')
@@ -352,6 +370,12 @@ router.get('/agenda_concesionario/:dia',function (req,res) {
           if (err) return handleError(err);
 
           if (model) {
+
+
+
+
+          	//io.io.sockets.emit('notify_concesionario',model);
+
             res.json({agenda: model});
             //console.log(model);
           }else{
@@ -365,7 +389,7 @@ router.get('/ver_agenda/:dia', function(req, res){
   console.log(req.params.dia);
   //console.log(io.io);
 
-  //io.io.sockets.emit('notify_concesionario',obj);
+  //
 
   Agenda.aggregate(
     {$match : {dia: ''+req.params.dia}},
