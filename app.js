@@ -15,6 +15,8 @@ var concesionario = require('./routes/concesionario');
 var Dashboard = require('./models/dashboard');
 var dashboard_f = require('./bin/dashb_funciones.js');
 
+var crontab =  require('crontab');
+
 var app = express();
 var enter = 0;
 var out = 0;
