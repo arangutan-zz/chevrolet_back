@@ -49,7 +49,7 @@ router.get('/estado_llamar_vendedor', function(req,res){
   
   // });
 
-  res.json({activo:true});
+  //res.json({activo:true});
   LlamarVendedor.find({},function (err,model) {
 
     if (model) {
