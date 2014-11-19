@@ -75,23 +75,23 @@ app.use(function(err, req, res, next) {
 mongoose.connect('mongodb://localhost:27017/catalogo');
 
 
-var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
+// var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
     
-    request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            enter = JSON.parse(body)["in"];
-        }
-    })
+//     request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
+//         if (!error && response.statusCode == 200) {
+//             enter = JSON.parse(body)["in"];
+//         }
+//     })
 
-    request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            out = JSON.parse(body)["out"];
-        }
-    })
+//     request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
+//         if (!error && response.statusCode == 200) {
+//             out = JSON.parse(body)["out"];
+//         }
+//     })
 
-    guardar_in_out(enter, out)
+//     guardar_in_out(enter, out)
 
-});
+// });
 
 
 module.exports = app;
