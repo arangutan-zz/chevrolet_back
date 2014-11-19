@@ -179,18 +179,19 @@ router.get('/', function(req, res) {
 
 
     /*------crear datos agenda--------*/
-    var agenda = new DatosAgenda({
-      dia: '11-12-2014',
-      delta: '15',
-      hora_ini: '5',
-      min_ini: '00',
-      hora_fin: '6',
-      min_fin: '00',
-      cupos: 5
-    }).save(function(err,obj){
-      if (err) return res.json(err);
+
+    // var agenda = new DatosAgenda({
+    //   dia: '11-12-2014',
+    //   delta: '15',
+    //   hora_ini: '5',
+    //   min_ini: '00',
+    //   hora_fin: '6',
+    //   min_fin: '00',
+    //   cupos: 5
+    // }).save(function(err,obj){
+    //   if (err) return res.json(err);
     
-    });
+    // });
 
 
   	res.render('vendedor');
@@ -350,7 +351,7 @@ router.get('/agendar/:dia/:hora/:id_cliente/:carro', function(req, res){
 			          		}
 			  			});
 
-  		
+
   	};
 
 
