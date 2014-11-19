@@ -3,6 +3,12 @@ var router = express.Router();
 var dashboard_f = require('../bin/dashb_funciones.js');
 var LlamarVendedor = require('../models/init_llamarvendedor');
 
+var request = require('request');
+var crontab =  require('node-crontab');
+
+var enter = 0;
+var out = 0;
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Chevrolet' });
@@ -35,9 +41,29 @@ router.get('/descargar', function(req,res){
 
 
 router.get('/init', function(req,res){
-
+console.log("ABC");
   dashboard_f.crear_dashboard();
   res.json({mensaje:'se inicio correctamente'});
+
+var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
+    
+    request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            enter = JSON.parse(body)["in"];
+        }
+    })
+
+    request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            out = JSON.parse(body)["out"];
+        }
+    })
+    console.log(enter);
+
+    dashboard_f.guardar_in_out(enter, out)
+
+});
+
   //res.render('descargar', {title: 'Descargar App'})
 });
 
