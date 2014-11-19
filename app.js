@@ -12,8 +12,12 @@ var apptv = require('./routes/apptv');
 var dashboard = require('./routes/dashboard');
 var concesionario = require('./routes/concesionario');
 
-var app = express();
+var Dashboard = require('./models/dashboard');
+var dashboard_f = require('./bin/dashb_funciones.js');
 
+var app = express();
+var enter = 0;
+var out = 0;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -68,6 +72,24 @@ app.use(function(err, req, res, next) {
 
 mongoose.connect('mongodb://localhost:27017/catalogo');
 
+
+var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
+    
+    request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            enter = JSON.parse(body)["in"];
+        }
+    })
+
+    request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            out = JSON.parse(body)["out"];
+        }
+    })
+
+    guardar_in_out(enter, out)
+
+});
 
 
 module.exports = app;

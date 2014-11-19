@@ -303,3 +303,4 @@ exports.calcular_consecionario_mas_ventas = calcular_consecionario_mas_ventas;
 exports.calcular_vendedor_mas_ventas = calcular_vendedor_mas_ventas;
 exports.obtener_carro_mas_vendido_especifico = obtener_carro_mas_vendido_especifico;
 exports.obtener_carro_mas_consultado_especifico = obtener_carro_mas_consultado_especifico;
+exports.guardar_in_out = guardar_in_out;
