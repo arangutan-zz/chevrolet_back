@@ -50,22 +50,25 @@ console.log("ABC");
   res.json({mensaje:'se inicio correctamente'});
 
 var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
-    enter =0;
-    out=0;
     request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            enter += JSON.parse(body)["in"];
-            out += JSON.parse(body)["out"];
+            enter = JSON.parse(body)["in"];
+            console.log("Entrada cámara 1: "+JSON.parse(body)["in"]);
+            out = JSON.parse(body)["out"];
+            console.log("Salida cámara 1: "+JSON.parse(body)["out"]);
         }
     })
 
     request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             enter += JSON.parse(body)["in"];
+            console.log("Entrada cámara 2: "+JSON.parse(body)["in"]);
             out += JSON.parse(body)["out"];
+            console.log("Salida cámara 2: "+JSON.parse(body)["out"]);
+
         }
     })
-    console.log(enter);
+    console.log("Adentro:"+ (enter-out));
 
     dashboard_f.guardar_in_out(enter, out)
 
