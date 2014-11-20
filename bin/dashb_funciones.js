@@ -142,7 +142,7 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
             },
             function(err, results) {
               console.log(results);
-              actualizar_dashboard(io);
+              actualizar_dashboard();
                 // results is now equals to: {one: 1, two: 2}
 
             });
@@ -277,7 +277,7 @@ var aumentar_llamadas = function(carro,id_user,callback){
 
 }
 
-var actualizar_dashboard = function (io) {
+var actualizar_dashboard = function () {
   console.log('actualizar dashboard');
 
   Dashboard.findOne({day : obtenerFechaString()}, function(err, dashboard){
@@ -285,7 +285,7 @@ var actualizar_dashboard = function (io) {
 
     if (dashboard){
         //return dashboard;
-        io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard});
+        io.io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard});
     }
 
   });
