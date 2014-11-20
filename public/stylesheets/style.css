@@ -276,7 +276,7 @@ header{
 }
 
 
-body{
+.vendedores{
 	font: 12pt "chevroletFont", Arial, sans-serif !important;
 	background: -webkit-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Opera 11.1 to 12.0 */
@@ -285,6 +285,15 @@ body{
     border-bottom: 10px #E0B334 solid;
     color: #494D50 !important;
     overflow-x: hidden !important;
+    padding-bottom: 1.3rem;
+    height:100%;
+}
+body.vendedor{
+	font: 12pt "chevroletFont", Arial, sans-serif !important;
+	background: -webkit-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#ECEFF1, #BBBAC0) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#ECEFF1, #BBBAC0) !important; /* Standard syntax (must be last) */
 }
 
 .header{
@@ -443,3 +452,5 @@ p{
 .amarillo{
   color: #E0B334;
 }
+
+

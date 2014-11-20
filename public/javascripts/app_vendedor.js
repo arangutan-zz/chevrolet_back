@@ -2,11 +2,12 @@ window.onload = function() {
 
     var info_cliente = {};
 
-
     var user = $('#username').html().trim();
     var id = $('#id').html().trim();
     console.log(user);
+    console.log("lkasdmalksdj");
     var socket = io.connect('http://10.102.0.15:3001');
+
     socket.on('notify_sellers', function (data) {
 
         if (data.turno.username === user ) {
@@ -130,3 +131,6 @@ window.onload = function() {
     }
 
 }
+$(document).ready(function(){
+    alert("Abc");
+})
