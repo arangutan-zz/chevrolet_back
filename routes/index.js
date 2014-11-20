@@ -50,18 +50,19 @@ console.log("ABC");
   res.json({mensaje:'se inicio correctamente'});
 
 var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
-    
+    enter =0;
+    out=0;
     request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            enter = JSON.parse(body)["in"];
-            out = JSON.parse(body)["out"];
+            enter += JSON.parse(body)["in"];
+            out += JSON.parse(body)["out"];
         }
     })
 
     request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            enter = enter + JSON.parse(body)["in"];
-            out =  out + JSON.parse(body)["out"];
+            enter += JSON.parse(body)["in"];
+            out += JSON.parse(body)["out"];
         }
     })
     console.log(enter);
