@@ -385,7 +385,7 @@ var cambiarEstadoAtendido = function(data){
 
 	
 	Vendedor.findOne({ _id: data.vendedor_id},function (err, vendedor){
-		vendedor.ventas.push({
+		vendedor.atendidos.push({
 				day: obtenerFechaString(),
 				date : Date(),
 				carro : data.car
