@@ -384,7 +384,16 @@ var cambiarEstadoAtendido = function(data){
 	});
 
 	
-
+	Vendedor.findOne({ _id: data.vendedor_id},function (err, vendedor){
+		vendedor.ventas.push({
+				day: obtenerFechaString(),
+				date : Date(),
+				carro : data.car
+			});
+		vendedor.save(function(err,vendedor){
+			if (err) console.log(err);
+		})
+	});
 	/*
 		data.vendedor_id
 
