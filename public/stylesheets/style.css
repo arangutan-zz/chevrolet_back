@@ -395,6 +395,22 @@ p{
 
 /*----------DASHBOARD-----------*/
 
+.db{
+	margin-top:0 !important;
+	margin-bottom:0 !important;
+	height: 100%;
+	padding-top: 50px;
+	font: 14px "chevroletFont", Arial, sans-serif;
+background: #eceef0;
+background: -moz-linear-gradient(top, #eceef0 0%, #bbbbc0 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eceef0), color-stop(100%,#bbbbc0));
+background: -webkit-linear-gradient(top, #eceef0 0%,#bbbbc0 100%);
+background: -o-linear-gradient(top, #eceef0 0%,#bbbbc0 100%);
+background: -ms-linear-gradient(top, #eceef0 0%,#bbbbc0 100%);
+background: linear-gradient(to bottom, #eceef0 0%,#bbbbc0 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eceef0', endColorstr='#bbbbc0',GradientType=0 );
+}
+
 .datos_now{
   margin: 50px;
 }

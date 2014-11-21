@@ -15,7 +15,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body ng-app="Dashboard">
-    <div class="datos_now" ng-controller="DatosNowCtrl">
+    <div class="datos_now db" ng-controller="DatosNowCtrl">
       <div class="row" >
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
@@ -24,30 +24,6 @@
           <p class="dato_dashboard text-center">
             {{data.in_total}}
           </p>
-          <div class="data_pasada">
-            <div class="row border-botom">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">19 / NOV</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">20 / NOV</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">21 / NOV</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
@@ -56,30 +32,6 @@
           <p class="dato_dashboard text-center">
             {{data.in}}
           </p>
-          <div class="data_pasada">
-            <div class="row border-botom">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">19 / NOV</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">20 / NOV</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">21 / NOV</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
@@ -88,30 +40,6 @@
           <p class="dato_dashboard text-center">
             {{data.calls}}
           </p>
-          <div class="data_pasada">
-            <div class="row border-botom">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">19 / NOV</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">20 / NOV</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">21 / NOV</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <br>
@@ -124,30 +52,40 @@
           <p class="dato_dashboard text-center">
             {{data.sells}}
           </p>
-          <div class="data_pasada">
-            <div class="row border-botom">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">19 / NOV</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">20 / NOV</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">21 / NOV</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column border-lados">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-              <div class="large-4 column">
-                <h6 class="fecha text-center bold">100.000</h6>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div class="large-4 column">
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Concesionario mas ventas</h5>
+          <hr class="bg-negro">
+          <p class="dato_dashboard_largo text-center mayusculas">
+            {{data.consecionario.name}}
+          </p>
+          <hr class="bg-negro">
+          <h5 class="text-center mayusculas">
+            {{data.consecionario.units}} unidades
+          </h5>
+        </div>
+        <div class="large-4 column">
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Vendedor con mas ventas</h5>
+          <hr class="bg-negro">
+          <p class="dato_dashboard_largo text-center mayusculas">
+            {{data.seller.name}}
+          </p>
+          <hr class="bg-negro">
+          <h5 class="text-center mayusculas">
+            {{data.seller.units}} unidades
+          </h5>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="large-4 column">
+          <h6 class="fecha text-center bold">{{data.date}}</h6>
+          <h5 class="text-center mayusculas titulo-dashboard">Ventas realizadas</h5>
+          <hr class="bg-negro">
+          <p class="dato_dashboard text-center">
+            {{data.sells}}
+          </p>
         </div>
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
