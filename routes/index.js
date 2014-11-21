@@ -68,7 +68,6 @@ var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this f
 
         }
     })
-    console.log("Adentro:"+ (enter-out));
 
     dashboard_f.guardar_in_out(enter, out)
 

@@ -197,7 +197,6 @@ var buscarVendedorDni = function(dni){
 }
 
 
-
 var cambiarEstadoCompraNew = function(data,socket,io){
 
 	var cliente = new Cliente({
@@ -383,6 +382,18 @@ var cambiarEstadoAtendido = function(data){
 
 
 	});
+
+	
+
+	/*
+		data.vendedor_id
+
+		vendedor.ventas.push({
+				day: obtenerFechaString(),
+				date : Date(),
+				carro : data.car
+			});
+	*/
 
 
 	// Concesionario.findOne({ _id: data.vendedor_id },function (err, model) {

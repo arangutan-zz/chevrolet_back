@@ -10,6 +10,7 @@ var VendedorSchema   = new Schema({
 	asistio: Boolean,
 	fechasAsistio: [Date],
 	ventas: { type : Array , default: [] },
+	atendidos: { type : Array , default: [] },
 	num_ventas : { type : Number , default: 0 },
 	disponible: { type : Boolean, default: true }
 });
