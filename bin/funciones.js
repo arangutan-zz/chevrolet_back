@@ -37,10 +37,14 @@ var siguienteTurno = function(io, socket, data){
 									
 									Vendedor.findOne({_id : c_primer.cola_vendedores[0]},function (err,vendedor) {
 										if (vendedor) {
-					    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
-			    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:vendedor});
-			    							eliminarPrimerVendedorCola(c_primer._id);
-										};
+					    					 io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+			    							 io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:vendedor});
+			    							 eliminarPrimerVendedorCola(c_primer._id);
+    										}else{
+									         io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+			    							 io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:null});
+                                                                                 //eliminarPrimerVendedorCola(c_primer._id);
+										}
 									})
 								}else{
 									console.log(c_primer.name+': no tiene vendedores en cola');
@@ -69,10 +73,14 @@ var siguienteTurno = function(io, socket, data){
 									
 									Vendedor.findOne({_id : c_siguiente.cola_vendedores[0]},function (err,vendedor) {
 										if (vendedor) {
-					    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
-			    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:vendedor});
-			    							eliminarPrimerVendedorCola(c_siguiente._id);
-										};
+					    						io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+			    								io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:vendedor});
+			    								eliminarPrimerVendedorCola(c_siguiente._id);
+										}else{
+			    								io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:null});
+					    						io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+			    								eliminarPrimerVendedorCola(c_siguiente._id);
+										}
 									})
 								}else{
 									console.log(c_siguiente.name+': no tiene vendedores en cola');
@@ -383,7 +391,7 @@ var cambiarEstadoAtendido = function(data){
 
 	});
 
-	
+	/*
 	Vendedor.findOne({ _id: data.vendedor_id},function (err, vendedor){
 		vendedor.atendidos.push({
 				day: obtenerFechaString(),
@@ -394,7 +402,7 @@ var cambiarEstadoAtendido = function(data){
 			if (err) console.log(err);
 		})
 	});
-	/*
+	
 		data.vendedor_id
 
 		vendedor.ventas.push({

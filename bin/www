@@ -80,8 +80,8 @@ io.sockets.on('connection', function (socket) {
 
 	/*When the customer is new the system*/
     socket.on('call_seller', function (data) {
-      //console.log('-----call_seller------');
-      //console.log(data);
+    //  console.log('-----call_seller------');
+    //  console.log(data);
 
     	func.siguienteTurno(io, socket, data);
 

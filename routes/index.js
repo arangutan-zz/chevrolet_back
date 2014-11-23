@@ -68,7 +68,8 @@ var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this f
 
         }
     })
-
+	console.log('este es el dato de entrada para guardar : '+enter);
+	console.log('este es el dato de salida para guardar : '+out);
     dashboard_f.guardar_in_out(enter, out)
 
 });
