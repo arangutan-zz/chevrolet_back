@@ -19,7 +19,7 @@ router.get('/:concesionario_name', function(req, res) {
 });
 
 
-router.get('/llenar', function(req, res) {
+router.get('/llenar/datosnuevos', function(req, res) {
 
 	Concesionario.update({username:'autoniza'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
 			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);

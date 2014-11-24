@@ -11,6 +11,157 @@ var obtenerFechaString = function(){
 }
 
 
+var siguienteTurnoParametrizado = function(io, socket, data){
+	Concesionario.findOne({atendiendo : true })
+		.exec(function (err,concesionario) {
+			if (err) {console.log("error");};
+			if (concesionario) {
+
+				if (concesionario.cupos - concesionario.cupos_usados > 0) {/*Le quedan cupos por asignar*/
+					
+					/*
+						1. Mira si tiene vendedores en cola
+						2. Aumenta sus cupos asignados
+						3. Notifica al vendedor
+						4. Quita de la cola
+					*/
+
+					console.log( "Numero de consecionarios: "+ count +" van en el turno "+ concesionario.turno);
+
+					if (concesionario.cola_vendedores.length > 0) {
+						
+						concesionario.cupos_usados = concesionario.cupos_usados + 1;
+
+						concesionario.save(function (err,concesionario) {
+							Vendedor.findOne({_id : concesionario.cola_vendedores[0]},function (err,vendedor) {
+							if (vendedor) {
+			    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: concesionario, user: data.user});
+	    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: concesionario, user: data.user, vendedor:vendedor});
+	    							eliminarPrimerVendedorCola(concesionario._id);
+								}else{
+									io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: concesionario, user: data.user});
+	    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: concesionario, user: data.user, vendedor:null});
+	    							eliminarPrimerVendedorCola(concesionario._id);
+								}
+							});
+						})
+
+						
+
+					}else{
+						console.log(concesionario.name+': no tiene vendedores en cola y tiene '+ (concesionario.cupos - concesionario.cupos_usados) +' turnos faltantes');
+					}
+
+
+				}else{/*No le quedan cupos por asignar*/
+					/*
+						1. Modifica los cupos asignados a 0 del concesionario para cuando le vuelva a tocar.
+						2. Busca el siguiente concesionario
+						3. Modifica al anterior que ya no esta atendiendo por el nuevo en atender
+						4. Mira si tiene vendedores en cola
+						5. Aumenta sus cupos asignados
+						6. Notifica al vendedor
+						7. Quita de la cola
+
+					*/
+
+
+					Concesionario.count({}, function( err, count){
+						console.log( "Numero de consecionarios: "+ count +" van en el turno "+ (concesionario.turno+1));
+
+						if (concesionario.turno + 1 > count) {
+							/*Vuelve a empezar*/
+
+							Concesionario.findOne({turno : 1},function(err,c_primer){
+									 c_primer.atendiendo = true;
+				    			concesionario.atendiendo = false;
+
+				    			concesionario.save(function(err,c_aten){
+					    			c_primer.save(function(err,c_primer){
+
+										if (c_primer.cola_vendedores.length > 0) {
+											
+
+											c_primer.cupos_usados = 1 + c_primer.cupos_usados;
+
+											c_primer.save(function (err,c_primer) {
+												// body...
+												Vendedor.findOne({_id : c_primer.cola_vendedores[0]},function (err,vendedor) {
+													if (vendedor) {
+								    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+						    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:vendedor});
+						    							eliminarPrimerVendedorCola(c_primer._id);
+													}else{
+														io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user});
+						    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_primer, user: data.user, vendedor:null});
+						    							eliminarPrimerVendedorCola(c_primer._id);
+													}
+												})
+
+											})
+										}else{
+											console.log(c_primer.name+': no tiene vendedores en cola');
+										}
+
+
+
+					    				//return c_primer;
+					    			});
+					    		});
+
+							});
+
+
+						}else{
+							/*Calcula el siguiente turno*/
+
+							Concesionario.findOne({turno : concesionario.turno + 1},function(err,c_siguiente){
+					    		c_siguiente.atendiendo = true;
+					    		concesionario.atendiendo = false;
+					    		concesionario.save(function(err,c_aten){
+					    			c_siguiente.save(function(err,c_siguiente){
+
+										//return c_siguiente;
+
+					    				if (c_siguiente.cola_vendedores.length > 0) {
+											
+					    					c_siguiente.cupos_usados = c_siguiente.cupos_usados + 1 ;
+
+					    					c_siguiente.save(function (err, c_siguiente) {
+					    						// body...
+
+												Vendedor.findOne({_id : c_siguiente.cola_vendedores[0]},function (err,vendedor) {
+													if (vendedor) {
+								    					io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+						    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:vendedor});
+						    							eliminarPrimerVendedorCola(c_siguiente._id);
+													}else{
+														io.sockets.emit('notify_sellers', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user});
+						    							io.sockets.emit('notify_tv', {tablet_id: socket.id, car: data.car, client: data.cliente, turno: c_siguiente, user: data.user, vendedor:null});
+						    							eliminarPrimerVendedorCola(c_siguiente._id);
+													}
+												})
+
+											})
+										}else{
+											console.log(c_siguiente.name+': no tiene vendedores en cola');
+										}
+
+
+					    			});
+					    		});
+					    	});
+
+						}
+
+					});
+				}
+			};
+		})
+}
+
+
+
 var siguienteTurno = function(io, socket, data){
 	//console.log("entro a calcular turno");
 	Concesionario.findOne({atendiendo : true})
