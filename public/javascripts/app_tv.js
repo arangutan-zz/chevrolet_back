@@ -15,16 +15,12 @@ window.onload = function() {
                                <!-- '<h3>'+data.vendedor.name+'</h3>'+ -->
 				'<h3>Vendedor</h3>'+
                               '</div>'+
-                              '<div class="columns large-5">'+
-                                '<h5>COMPRADOR:</h5>'+
-                                '<h3>'+data.user.name+'</h3>'+
+                            '<div class="columns large-5">'+
+                             '<h5>COMPRADOR:</h5>'+
+                               '<h3>'+data.user.name+'</h3>'+
                               '</div>'+
                             '</div>'+
                             '<div class="row">'+
-                           
-                             
-                               
-                              
                               '<div class="columns large-5">'+
                                 '<h5>DESTINO:</h5>'+
                                 '<h3>'+data.car+'</h3>'+

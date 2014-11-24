@@ -19,5 +19,4 @@ router.get('/:concesionario_name', function(req, res) {
 });
 
 
-
 module.exports = router;

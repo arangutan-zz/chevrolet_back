@@ -45,32 +45,41 @@ router.get('/descargar', function(req,res){
 
 
 router.get('/init', function(req,res){
-console.log("ABC");
-  dashboard_f.crear_dashboard();
+  console.log("ABC");
+  //Vendedor.update({},{$set : {num_ventas:0}},{multi:true});
+  //dashboard_f.crear_dashboard();
   res.json({mensaje:'se inicio correctamente'});
 
 var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
+	enter =0;
+	out =0;
     request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            enter = JSON.parse(body)["in"];
-            console.log("Entrada cámara 1: "+JSON.parse(body)["in"]);
-            out = JSON.parse(body)["out"];
-            console.log("Salida cámara 1: "+JSON.parse(body)["out"]);
-        }
-    })
-
-    request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
             enter += JSON.parse(body)["in"];
-            console.log("Entrada cámara 2: "+JSON.parse(body)["in"]);
+            console.log("Entrada cámara 1 JSON: "+JSON.parse(body)["in"]);
+	    console.log("Dato en ENTER: "+enter);
             out += JSON.parse(body)["out"];
-            console.log("Salida cámara 2: "+JSON.parse(body)["out"]);
+            console.log("Dato en OUT: "+out);
+            console.log("Salida cámara 1 JSON: "+JSON.parse(body)["out"]);
 
         }
     })
-	console.log('este es el dato de entrada para guardar : '+enter);
-	console.log('este es el dato de salida para guardar : '+out);
-    dashboard_f.guardar_in_out(enter, out)
+    setTimeout(function(){
+	    request('http://10.102.0.17/local/people-counter/.api?live-sum.json', function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        enter += JSON.parse(body)["in"];
+	        console.log("Entrada cámara 2 JSON: "+JSON.parse(body)["in"]);
+	    console.log("Dato en ENTER: "+enter);
+            out += JSON.parse(body)["out"];
+            console.log("Salida cámara 2 JSON: "+JSON.parse(body)["out"]);
+	    console.log("Dato en OUT: "+out);
+            console.log('este es el dato de entrada para guardar : '+enter);
+            console.log('este es el dato de salida para guardar : '+out);
+	    dashboard_f.guardar_in_out(enter, out)
+        }
+    })
+    },4000);
+ 
 
 });
 
