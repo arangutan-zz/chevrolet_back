@@ -11,8 +11,6 @@ var obtenerFechaString = function(){
 }
 
 
-
-
 var siguienteTurno = function(io, socket, data){
 	//console.log("entro a calcular turno");
 	Concesionario.findOne({atendiendo : true})

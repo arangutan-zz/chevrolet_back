@@ -21,13 +21,53 @@ router.get('/:concesionario_name', function(req, res) {
 
 router.get('/llenar', function(req, res) {
 
-	Concesionario.update({username:'aca va el username'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+	Concesionario.update({username:'autoniza'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
 			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
 		if (err) {
 			console.log('error');
 		};
 		if (obj) {
-			console.log('se actualizo perfectamente'):
+			console.log('se actualizo perfectamente');
+		};
+	});
+
+	Concesionario.update({username:'continautos'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+		if (err) {
+			console.log('error');
+		};
+		if (obj) {
+			console.log('se actualizo perfectamente');
+		};
+	});
+
+	Concesionario.update({username:'San Jorge'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+		if (err) {
+			console.log('error');
+		};
+		if (obj) {
+			console.log('se actualizo perfectamente');
+		};
+	});
+
+	Concesionario.update({username:'autogrande'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+		if (err) {
+			console.log('error');
+		};
+		if (obj) {
+			console.log('se actualizo perfectamente');
+		};
+	});
+
+	Concesionario.update({username:'internacional'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+		if (err) {
+			console.log('error');
+		};
+		if (obj) {
+			console.log('se actualizo perfectamente');
 		};
 	});
 
