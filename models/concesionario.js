@@ -11,8 +11,8 @@ var ConcesionarioSchema   = new Schema({
 	cola_vendedores : { type: [String]},
 
 	/*New elements*/
-	cupos : {type Number , default : 0},
-	cupos_usados : {type Number , default : 0}
+	cupos : {type: Number , default : 0},
+	cupos_usados : {type: Number , default : 0}
 
 });
 
