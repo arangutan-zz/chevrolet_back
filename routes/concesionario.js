@@ -19,5 +19,21 @@ router.get('/:concesionario_name', function(req, res) {
 });
 
 
+router.get('/llenar', function(req, res) {
+
+	Concesionario.update({username:'aca va el username'}, { $set: { cupos: 6,cupos_usados: 0}}, function(err,obj){
+			//elmininarVendedorCola(data.consecionario_id, data.vendedor_id);
+		if (err) {
+			console.log('error');
+		};
+		if (obj) {
+			console.log('se actualizo perfectamente'):
+		};
+	});
+
+});
+
+
+
 
 module.exports = router;

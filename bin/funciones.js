@@ -10,8 +10,13 @@ var obtenerFechaString = function(){
 	return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()
 }
 
+
+
+
+
+
 var siguienteTurno = function(io, socket, data){
-	console.log("entro a calcular turno");
+	//console.log("entro a calcular turno");
 	Concesionario.findOne({atendiendo : true})
 		//.where({'pictures.0': {$exists: true}})
 		.exec(function(err,c_atendiendo){

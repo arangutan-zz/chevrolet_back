@@ -8,7 +8,12 @@ var ConcesionarioSchema   = new Schema({
 	atendiendo : {type: Boolean , required: true, default: false },
 	estado : {type: String , required: true, default: "activo"},
 	carros_atendiendo : { type: [String]},
-	cola_vendedores : { type: [String]}
+	cola_vendedores : { type: [String]},
+
+	/*New elements*/
+	cupos : {type Number , default : 0},
+	cupos_usados : {type Number , default : 0}
+
 });
 
 
