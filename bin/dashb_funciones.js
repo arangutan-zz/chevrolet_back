@@ -163,7 +163,7 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
 
 var guardar_in_out = function (enter,out) {
   // body...
-
+  console.log("Actualizar");
   Dashboard.update({day:obtenerFechaString()}, { $set: { 'enter': enter ,'out': out  }}, function(err,obj){
       actualizar_dashboard(io.io);
   });

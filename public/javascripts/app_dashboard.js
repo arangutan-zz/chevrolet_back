@@ -76,7 +76,7 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 
 			$scope.data = {
 				in : data.enter - data.out,
-				in_total : data.out,
+				in_total : data.enter,
 				calls : data.calls,
 				sells: data.total_sells,
 				consecionario:{
