@@ -13,7 +13,7 @@ window.onload = function() {
                               '<div class="columns large-7">'+
                                 '<h5>VENDEDOR:</h5>'+
                                <!-- '<h3>'+data.vendedor.name+'</h3>'+ -->
-				'<h3>Vendedor</h3>'+
+				'<h3>Vendedor '+''+data.turno.cupos_usados+'</h3>'+
                               '</div>'+
                             '<div class="columns large-5">'+
                              '<h5>COMPRADOR:</h5>'+
@@ -25,6 +25,10 @@ window.onload = function() {
                                 '<h5>DESTINO:</h5>'+
                                 '<h3>'+data.car+'</h3>'+
                               '</div>'+
+				'<div class="columns large-5">'+
+					'<h5>CONCESIONARIO:</h5>'+
+					'<h3>'+data.turno.name+'</h3>'+
+				'</div>'+
                             '</div>'+
                           '</div>'+
                         '</div>';

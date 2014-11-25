@@ -82,8 +82,12 @@ io.sockets.on('connection', function (socket) {
     socket.on('call_seller', function (data) {
     //  console.log('-----call_seller------');
     //  console.log(data);
+	
+/*The old one solution*/
+    //	func.siguienteTurno(io, socket, data);
+/*The new implementation call*/
+	func.siguienteTurnoParametrizado(io, socket, data);
 
-    	func.siguienteTurno(io, socket, data);
 
       /*Keep data for the dashboard*/
       dashboard_f.obtener_carro_mas_consultado_especifico('hoy');

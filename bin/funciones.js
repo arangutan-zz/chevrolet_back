@@ -26,7 +26,7 @@ var siguienteTurnoParametrizado = function(io, socket, data){
 						4. Quita de la cola
 					*/
 
-					console.log( "Numero de consecionarios: "+ count +" van en el turno "+ concesionario.turno);
+					console.log( "Nombre del concesionario "+concesionario.name+" tiene "+concesionario.cupos+" cupos y por asignar le quedan "+ (concesionario.cupos - concesionario.cupos_usados));
 
 					if (concesionario.cola_vendedores.length > 0) {
 						
@@ -75,6 +75,8 @@ var siguienteTurnoParametrizado = function(io, socket, data){
 							Concesionario.findOne({turno : 1},function(err,c_primer){
 									 c_primer.atendiendo = true;
 				    			concesionario.atendiendo = false;
+							concesionario.cupos_atendidos = 0;
+							console.log( "Nombre del concesionario "+c_primer.name+" tiene "+c_primer.cupos+" cupos y por asignar le quedan "+ (c_primer.cupos - c_primer.cupos_usados));
 
 				    			concesionario.save(function(err,c_aten){
 					    			c_primer.save(function(err,c_primer){
@@ -118,6 +120,8 @@ var siguienteTurnoParametrizado = function(io, socket, data){
 							Concesionario.findOne({turno : concesionario.turno + 1},function(err,c_siguiente){
 					    		c_siguiente.atendiendo = true;
 					    		concesionario.atendiendo = false;
+							concesionario.cupos_atendidos = 0;
+							console.log( "Nombre del concesionario "+c_siguiente.name+" tiene "+c_siguiente.cupos+" cupos y por asignar le quedan "+ (c_siguiente.cupos - c_siguiente.cupos_usados));
 					    		concesionario.save(function(err,c_aten){
 					    			c_siguiente.save(function(err,c_siguiente){
 
@@ -828,6 +832,7 @@ var seleccionar_hora =  function (data,io) {
 
 
 exports.siguienteTurno = siguienteTurno;
+exports.siguienteTurnoParametrizado = siguienteTurnoParametrizado;
 //exports.siguienteTurnoSinTv = siguienteTurnoSinTv;
 //exports.cancelarTurno = cancelarTurno;
 exports.cambiarEstadoCompra = cambiarEstadoCompra;

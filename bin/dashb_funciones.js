@@ -218,13 +218,13 @@ var obtener_carro_mas_consultado_especifico = function(fecha,callback){
       $sort: {total_calls: -1}
     },
     {
-      $limit : 1
+      $limit : 2
     },
     function(err,res){
 
-      if (res[0]) {
-        Dashboard.update({day:fecha}, { $set: { 'carro_consultado.name': res[0]._id ,'carro_consultado.units': res[0].total_calls  }}, function(err,obj){
-            console.log(res[0]);
+      if (res[1]) {
+        Dashboard.update({day:fecha}, { $set: { 'carro_consultado.name': res[1]._id ,'carro_consultado.units': res[1].total_calls  }}, function(err,obj){
+            console.log(res[1]);
 
             if (callback) {
               callback();
@@ -232,7 +232,6 @@ var obtener_carro_mas_consultado_especifico = function(fecha,callback){
 
         });
       }
-
     }
   )
 }
