@@ -75,7 +75,7 @@ var siguienteTurnoParametrizado = function(io, socket, data){
 							Concesionario.findOne({turno : 1},function(err,c_primer){
 									 c_primer.atendiendo = true;
 				    			concesionario.atendiendo = false;
-							concesionario.cupos_atendidos = 0;
+							concesionario.cupos_usados = 0;
 							console.log( "Nombre del concesionario "+c_primer.name+" tiene "+c_primer.cupos+" cupos y por asignar le quedan "+ (c_primer.cupos - c_primer.cupos_usados));
 
 				    			concesionario.save(function(err,c_aten){
@@ -120,7 +120,7 @@ var siguienteTurnoParametrizado = function(io, socket, data){
 							Concesionario.findOne({turno : concesionario.turno + 1},function(err,c_siguiente){
 					    		c_siguiente.atendiendo = true;
 					    		concesionario.atendiendo = false;
-							concesionario.cupos_atendidos = 0;
+							concesionario.cupos_usados = 0;
 							console.log( "Nombre del concesionario "+c_siguiente.name+" tiene "+c_siguiente.cupos+" cupos y por asignar le quedan "+ (c_siguiente.cupos - c_siguiente.cupos_usados));
 					    		concesionario.save(function(err,c_aten){
 					    			c_siguiente.save(function(err,c_siguiente){

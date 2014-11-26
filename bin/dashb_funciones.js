@@ -8,7 +8,7 @@ var Agenda = require('../models/agenda');
 var async =  require('async');
 
 var io = require('../bin/www');
-
+var adicionales = {};
 
 var obtenerFechaString = function(){
   var d = new Date();
@@ -95,7 +95,28 @@ var calcular_consecionario_mas_ventas = function(fecha){
   );
 }
 
+var cinco_mas_consultados = function(fecha){
 
+ if(fecha == 'hoy'){
+    fecha = obtenerFechaString();   
+ }
+ 
+   	Consultado.aggregate({
+      		$match: {dia: ''+fecha}
+   	},{
+		$group :{ _id: '$carro', total_sells: { $sum: 1 } }
+
+	},{
+	        $sort: {total_sells: -1}		
+	},{
+	        $limit : 6
+	},function(err,res){
+		adicionales = res;
+	}); 
+
+
+};
+ 
 
 var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
 
@@ -138,7 +159,13 @@ var aumentar_vendidos = function(carro,id_user,id_vendidos,io){
                     setTimeout(function(){
                         callback(null, 'done');
                     }, 1000);
-                }
+                },
+		four: function(callback){
+		   cinco_mas_consultados('hoy');
+		   setTimeout(function(){
+		    callback(null,'done');
+		   },1000);
+		} 
             },
             function(err, results) {
               console.log(results);
@@ -227,7 +254,17 @@ var obtener_carro_mas_consultado_especifico = function(fecha,callback){
             console.log(res[1]);
 
             if (callback) {
-              callback();
+		async.parallel({
+			one : function(call){
+				cinco_mas_consultados('hoy');
+				setTimeout(function(){
+					call(null,'done');
+				},1000);
+			}
+		},function(err,results){
+			actualizar_dashboard();
+		});
+
             }
 
         });
@@ -284,7 +321,7 @@ var actualizar_dashboard = function () {
 
     if (dashboard){
         //return dashboard;
-        io.io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard});
+        io.io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard, adicionales : adicionales});
     }
 
   });

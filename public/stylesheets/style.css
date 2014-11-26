@@ -240,7 +240,7 @@ header{
 }
 
 .lista_peticiones{
-	height: 610px;
+/*	height: 610px;*/
 	overflow-y: hidden;
 	color: #464B51;
 }

@@ -47,7 +47,7 @@ router.get('/descargar', function(req,res){
 router.get('/init', function(req,res){
   console.log("ABC");
   //Vendedor.update({},{$set : {num_ventas:0}},{multi:true});
-  //dashboard_f.crear_dashboard();
+  dashboard_f.crear_dashboard();
   res.json({mensaje:'se inicio correctamente'});
 
 var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this function every 1 minute
