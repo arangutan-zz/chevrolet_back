@@ -33,7 +33,7 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 		}
 	}
 	$scope.cars = [];
-
+	$scope.car_sells = [];
 
 	socket.on('actualizacion_dashboard', function (data) {
 		console.log(data);
@@ -42,6 +42,7 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 
 		*/
 		$scope.cars = data.adicionales;
+		$scope.car_sells = data.adicionales_ventas;
 		$scope.data = {
 			in : data.dashboard.enter - data.dashboard.out,
 			in_total : data.dashboard.enter,

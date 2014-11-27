@@ -77,6 +77,14 @@
 		{{(data.sells*100)/data.in_total}} %
 	  </p>
         </div>
+	<div class="large-4 column">
+		<h6 class="text-center mayusculas titulo-dashboard">CARRO MÁS VENDIDO</h6>
+		<hr class="bg-negro">
+		<ul ng-repeat="car_sell in car_sells">
+			<li>{{car_sell._id}} - {{car_sell.total_sells}}</li>
+		</ul>
+	</div>
+
 <!--
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
