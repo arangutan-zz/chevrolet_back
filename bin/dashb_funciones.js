@@ -10,6 +10,7 @@ var async =  require('async');
 var io = require('../bin/www');
 var adicionales = {};
 var adicionales_ventas = {};
+var vendedor_ventas_ranking = {};
 
 var obtenerFechaString = function(){
   var d = new Date();
@@ -54,6 +55,7 @@ var calcular_vendedor_mas_ventas = function(fecha){
   Vendedor.find({ 'ventas.day': fecha })
       .select('name num_ventas')
       .sort({'num_ventas': 'desc'})
+      .limit(5)
       .exec(function(err,vendedores){
     if (err) {return console.log("error");};
 
@@ -65,6 +67,7 @@ var calcular_vendedor_mas_ventas = function(fecha){
             console.log(vendedores[0]);
         });
       //}
+      vendedor_ventas_ranking = vendedores;
 
     } else{
 

@@ -395,6 +395,14 @@ p{
 
 /*----------DASHBOARD-----------*/
 
+html{
+	height: initial;
+}
+
+body.dashbody{
+	height:initial;
+
+}
 .db{
 	margin-top:0 !important;
 	margin-bottom:0 !important;

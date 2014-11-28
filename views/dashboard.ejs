@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="dashbody">
   <head>
     <title>Dashboard</title>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/javascripts/app_dashboard.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body ng-app="Dashboard">
+  <body ng-app="Dashboard" class="dashbody">
     <div class="datos_now db" ng-controller="DatosNowCtrl">
       <div class="row" >
         <div class="large-4 column">
@@ -45,7 +45,7 @@
 		<hr class="bg-negro">
 
 		<ul ng-repeat="car in cars">
-			<li>{{car._id}} - {{car.total_sells}}</li>
+			<li>{{car._id | uppercase}} - {{car.total_sells}}</li>
 		</ul>
 		<!--<p class="text-center">
 			{{data.car_call.name}}
@@ -58,9 +58,17 @@
           <p class="dato_dashboard text-center">
             {{data.calls}}
           </p>
-	<p>
-		{{(data.calls*100)/data.in_total}} %
-	</p>	
+
+  <p>
+      <div>
+          Efectividad sobre entradas
+      </div>
+      <div>
+        {{(data.calls*100)/data.in_total}} %
+      </div>
+    
+    </p>
+
         </div>
       </div>
       <br>
@@ -73,15 +81,42 @@
           <p class="dato_dashboard text-center">
             {{data.sells}}
           </p>
-	  <p>
-		{{(data.sells*100)/data.in_total}} %
-	  </p>
+
+          <p>
+          <div>
+              Efectividad sobre entradas
+          </div>
+          <div>
+            {{(data.sells*100)/data.in_total}} %
+          </div>
+          <br>
+        </p>
+	       <p>
+          <div>
+            Efectividad sobre llamadas
+          </div>
+          <div>
+            {{(data.sells*100)/data.calls}} %
+          </div>		
+	       </p>
+
+
+
+        </div>
+
+
+        <div class="large-4 column">
+          <h6 class="text-center mayusculas titulo-dashboard">VENDEDOR CON MÁS VENTAS</h6>
+          <hr class="bg-negro">
+          <ul ng-repeat="seller in sellers">
+            <li>{{seller.name}} - {{seller.units}}</li>
+          </ul>
         </div>
 	<div class="large-4 column">
 		<h6 class="text-center mayusculas titulo-dashboard">CARRO MÁS VENDIDO</h6>
 		<hr class="bg-negro">
 		<ul ng-repeat="car_sell in car_sells">
-			<li>{{car_sell._id}} - {{car_sell.total_sells}}</li>
+			<li>{{car_sell._id | uppercase}} - {{car_sell.total_sells}}</li>
 		</ul>
 	</div>
 

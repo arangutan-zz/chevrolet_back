@@ -55,7 +55,7 @@ var jobId = crontab.scheduleJob("* * * * *", function(){ //This will call this f
 	out =0;
     request('http://10.102.0.16/local/people-counter/.api?live-sum.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            enter += JSON.parse(body)["in"];
+            enter = JSON.parse(body)["in"];
             console.log("Entrada cámara 1 JSON: "+JSON.parse(body)["in"]);
 	    console.log("Dato en ENTER: "+enter);
             out += JSON.parse(body)["out"];
