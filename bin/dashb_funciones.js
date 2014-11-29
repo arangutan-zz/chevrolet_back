@@ -67,13 +67,13 @@ var calcular_vendedor_mas_ventas = function(fecha){
             console.log(vendedores[0]);
         });
       //}
-      vendedor_ventas_ranking = vendedores;
 
     } else{
 
     };
   });
-}
+
+  
 
 var calcular_consecionario_mas_ventas = function(fecha){
   Vendedor.aggregate(
@@ -97,6 +97,43 @@ var calcular_consecionario_mas_ventas = function(fecha){
       }
     }
   );
+
+  Vendedor.aggregate( 
+    {
+      $match: { 
+        ventas: 
+          { 
+            $elemMatch:{ 
+              day: ''+fecha
+            } 
+          } 
+      }
+    },
+    {   // create a doc with a single array elemm for each indexToken entry
+      $unwind: "$ventas" 
+    },
+    {
+      $match: { 
+        ventas: 
+          { 
+            $gt:{ 
+              day: ''+fecha
+            } 
+          } 
+      }
+    },
+    {
+      $group: {_id: '$name', count: { $sum: 1 }}
+    },
+    {
+      $sort: {count: -1}
+    },function (err, res) {
+      if (err) return handleError(err);
+      console.log(res);
+
+      vendedor_ventas_ranking = vendedores;
+    }
+  )
 }
 
 var cinco_mas_vendidos = function(fecha){
