@@ -72,33 +72,7 @@ var calcular_vendedor_mas_ventas = function(fecha){
 
     };
   });
-
-  
-
-var calcular_consecionario_mas_ventas = function(fecha){
-  Vendedor.aggregate(
-    { $group:
-      { _id: '$concesionario_name', total_sells: { $sum: "$num_ventas" } }
-    },
-    {
-      $sort: {total_sells: -1}
-    },
-    {
-      $limit : 1
-    },
-    function (err, res) {
-      if (err) return handleError(err);
-      console.log(res);
-
-      if (res[0]) {
-        Dashboard.update({day:fecha}, { $set: { 'concesionario_ventas.name': res[0]._id ,'concesionario_ventas.units': res[0].total_sells  }}, function(err,obj){
-            console.log(res[0]);
-        });
-      }
-    }
-  );
-
-  Vendedor.aggregate( 
+      Vendedor.aggregate( 
     {
       $match: { 
         ventas: 
@@ -133,7 +107,33 @@ var calcular_consecionario_mas_ventas = function(fecha){
 
       vendedor_ventas_ranking = vendedores;
     }
-  )
+  );
+}
+
+  
+
+var calcular_consecionario_mas_ventas = function(fecha){
+  Vendedor.aggregate(
+    { $group:
+      { _id: '$concesionario_name', total_sells: { $sum: "$num_ventas" } }
+    },
+    {
+      $sort: {total_sells: -1}
+    },
+    {
+      $limit : 1
+    },
+    function (err, res) {
+      if (err) return handleError(err);
+      console.log(res);
+
+      if (res[0]) {
+        Dashboard.update({day:fecha}, { $set: { 'concesionario_ventas.name': res[0]._id ,'concesionario_ventas.units': res[0].total_sells  }}, function(err,obj){
+            console.log(res[0]);
+        });
+      }
+    }
+  );
 }
 
 var cinco_mas_vendidos = function(fecha){
