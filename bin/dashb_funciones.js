@@ -346,7 +346,7 @@ var actualizar_dashboard = function () {
 
     if (dashboard){
         //return dashboard;
-        io.io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard, adicionales : adicionales, adicionales_ventas : adicionales_ventas});
+        io.io.sockets.emit('actualizacion_dashboard', {dashboard: dashboard, adicionales : adicionales, adicionales_ventas : adicionales_ventas, vendedor_ventas_ranking:vendedor_ventas_ranking});
     }
 
   });

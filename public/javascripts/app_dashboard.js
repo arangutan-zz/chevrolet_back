@@ -44,7 +44,7 @@ app.controller('DatosNowCtrl', ['$scope','socket','$http', function($scope,socke
 		*/
 		$scope.cars = data.adicionales;
 		$scope.car_sells = data.adicionales_ventas;
-		//$scope.sellers = data.vendedor_ventas_ranking;
+		$scope.sellers = data.vendedor_ventas_ranking;
 		$scope.data = {
 			in : data.dashboard.enter - data.dashboard.out,
 			in_total : data.dashboard.enter,

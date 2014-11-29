@@ -104,14 +104,15 @@
 
         </div>
 
-
+<!--
         <div class="large-4 column">
           <h6 class="text-center mayusculas titulo-dashboard">VENDEDOR CON MÁS VENTAS</h6>
           <hr class="bg-negro">
           <ul ng-repeat="seller in sellers">
-            <li>{{seller.name}} - {{seller.units}}</li>
+            <li>{{seller.name | uppercase}} - {{seller.num_ventas}}</li>
           </ul>
         </div>
+-->
 	<div class="large-4 column">
 		<h6 class="text-center mayusculas titulo-dashboard">CARRO MÁS VENDIDO</h6>
 		<hr class="bg-negro">
@@ -119,7 +120,6 @@
 			<li>{{car_sell._id | uppercase}} - {{car_sell.total_sells}}</li>
 		</ul>
 	</div>
-
 <!--
         <div class="large-4 column">
           <h6 class="fecha text-center bold">{{data.date}}</h6>
