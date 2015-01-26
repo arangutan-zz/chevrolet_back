@@ -105,7 +105,7 @@ var calcular_vendedor_mas_ventas = function(fecha){
       if (err) return handleError(err);
       console.log(res);
 
-      vendedor_ventas_ranking = vendedores;
+      vendedor_ventas_ranking = res;
     }
   );
 }
